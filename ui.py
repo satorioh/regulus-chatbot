@@ -13,7 +13,7 @@ st.set_page_config(
                 '''}
 )
 
-st.title("Regulus Chatbot🤖")
+st.title("Regulus Chatbot 🤖")
 history_dom = st.empty()
 question_dom = st.markdown(
     ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
@@ -43,7 +43,8 @@ def display_history(history=None):
 
 def predict(input):
     try:
-        return agent.run(input=input)
+        with st.spinner('AI 思考中...'):
+            return agent.run(input=input)
     except Exception as e:
         print(e)
         return "我被你问崩溃了，呜呜呜"
@@ -51,7 +52,7 @@ def predict(input):
 
 with st.form("form", True):
     # create a prompt text for the text generation
-    user_input = st.text_area(label=":thinking_face: 咨询点什么？",
+    user_input = st.text_area(label=":thinking_face: 问点什么？",
                               height=100,
                               max_chars=MAX_CONTEXT,
                               placeholder="支持使用 Markdown 格式书写")
