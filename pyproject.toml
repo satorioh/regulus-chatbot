@@ -6,6 +6,11 @@ description = ""
 authors = [
     {name = "Robin.Wang", email = "3Jg$94sbQ@q1"},
 ]
-dependencies = []
+dependencies = [
+    "fastapi[all]>=0.98.0",
+]
 requires-python = ">=3.10"
 license = {text = "MIT"}
+
+[tool.pdm.scripts]
+start = "doppler run -- python start.py"
