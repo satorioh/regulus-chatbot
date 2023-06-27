@@ -1,11 +1,7 @@
 import streamlit as st
-import os
-from langchain.chat_models import ChatOpenAI
+from llm import init_agent
 
 MAX_CONTEXT = 1000
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-OPENAI_API_BASE = os.getenv("BASE_URL")
-MODEL_NAME = "gpt-3.5-turbo"
 
 st.set_page_config(
     page_title="Regulus Chatbot",
@@ -27,21 +23,16 @@ st.write("")
 
 
 @st.cache_resource
-def get_chat():
-    chat = ChatOpenAI(
-        openai_api_key=OPENAI_API_KEY,
-        openai_api_base=OPENAI_API_BASE,
-        temperature=0,
-        model_name=MODEL_NAME
-    )
-    return chat
+def get_agent():
+    agent = init_agent()
+    return agent
 
 
-chat = get_chat()
+agent = get_agent()
 
 
 def predict(input):
-    return chat.predict(input)
+    return agent.run(input=input)
 
 
 with st.form("form", True):
