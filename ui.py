@@ -31,8 +31,19 @@ def get_agent():
 agent = get_agent()
 
 
+def display_history(history=None):
+    if history != None:
+        text = ""
+        for item in history:
+            text += f"{item.content}\n\n"
+            history_dom.markdown(text)
+
+
 def predict(input):
-    return agent.run(input=input)
+    try:
+        return agent.run(input=input)
+    except Exception as e:
+        return "出错了，请稍后再试"
 
 
 with st.form("form", True):
@@ -49,6 +60,13 @@ with st.form("form", True):
         btn_clear = st.form_submit_button("清除历史记录", use_container_width=True)
 
     if btn_send and user_input != "":
+        display_history(agent.memory.buffer)
+        question_dom.markdown(
+            ":face_with_cowboy_hat:\n\n{}\n\n---\n".format(user_input))
         answer = predict(user_input)
         print(f"回答：{answer}", flush=True)
         answer_dom.markdown(answer)
+
+    if btn_clear:
+        history_dom.empty()
+        agent.memory.clear()
