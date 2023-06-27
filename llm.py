@@ -35,7 +35,8 @@ memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
 llm_chain = LLMChain(llm=OpenAI(temperature=0), prompt=prompt)
 agent = ZeroShotAgent(llm_chain=llm_chain, tools=tools, verbose=True)
 agent_chain = AgentExecutor.from_agent_and_tools(
-    agent=agent, tools=tools, verbose=True, memory=memory, max_iterations=3
+    agent=agent, tools=tools, verbose=True, memory=memory,
+    handle_parsing_errors="Check your output and make sure it conforms!"
 )
 
 

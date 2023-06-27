@@ -13,7 +13,7 @@ st.set_page_config(
                 '''}
 )
 
-st.title("Regulus Chatbot👋")
+st.title("Regulus Chatbot🤖")
 history_dom = st.empty()
 question_dom = st.markdown(
     ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
@@ -34,16 +34,19 @@ agent = get_agent()
 def display_history(history=None):
     if history != None:
         text = ""
-        for item in history:
-            text += f"{item.content}\n\n"
-            history_dom.markdown(text)
+        for index, item in enumerate(history):
+            if index % 2 == 0:
+                text += "🤠：{}\n\n🤖：{}\n\n---\n".format(
+                    item.content, history[index + 1].content)
+                history_dom.markdown(text)
 
 
 def predict(input):
     try:
         return agent.run(input=input)
     except Exception as e:
-        return "出错了，请稍后再试"
+        print(e)
+        return "我被你问崩溃了，呜呜呜"
 
 
 with st.form("form", True):
@@ -62,10 +65,10 @@ with st.form("form", True):
     if btn_send and user_input != "":
         display_history(agent.memory.buffer)
         question_dom.markdown(
-            ":face_with_cowboy_hat:\n\n{}\n\n---\n".format(user_input))
+            "🤠：{}\n\n".format(user_input))
         answer = predict(user_input)
         print(f"回答：{answer}", flush=True)
-        answer_dom.markdown(answer)
+        answer_dom.markdown(f"🤖：{answer}")
 
     if btn_clear:
         history_dom.empty()
