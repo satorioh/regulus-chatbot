@@ -1,7 +1,10 @@
 import streamlit as st
 from llm import generate_answer, get_history, clear_history
-
-MAX_CONTEXT = 1000
+from config.global_config import (
+    MAX_CONTEXT,
+    USER_EMOJI,
+    BOT_EMOJI
+)
 
 st.set_page_config(
     page_title="Regulus Chatbot",
@@ -13,7 +16,7 @@ st.set_page_config(
                 '''}
 )
 
-st.title("Regulus Chatbot 🤖")
+st.title(f"Regulus Chatbot {BOT_EMOJI}")
 history_dom = st.empty()
 question_dom = st.markdown(
     ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
@@ -32,8 +35,7 @@ def display_history():
         text = ""
         for index, item in enumerate(history):
             if index % 2 == 0:
-                text += "🤠：{}\n\n🤖：{}\n\n---\n".format(
-                    item.content, history[index + 1].content)
+                text += f"{USER_EMOJI}：{item.content}\n\n{BOT_EMOJI}：{history[index + 1].content}\n\n---\n"
                 history_dom.markdown(text)
 
 
@@ -61,11 +63,11 @@ with st.form("form", True):
     if btn_send and user_input != "":
         display_history()
         question_dom.markdown(
-            "🤠：{}\n\n".format(user_input))
+            f"{USER_EMOJI}：{user_input}\n\n")
         answer = predict(user_input)
         print(f"回答：{answer}", flush=True)
-        answer_dom.markdown(f"🤖：{answer}")
+        answer_dom.markdown(f"{BOT_EMOJI}：{answer}")
 
-    if btn_clear:
-        history_dom.empty()
+        if btn_clear:
+            history_dom.empty()
         clear_history()
