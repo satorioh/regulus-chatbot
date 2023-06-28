@@ -58,6 +58,7 @@ def generate_answer(query):
     try:
         answer = conversation.run(query)
         if check_fail_keywords(answer):
+            delete_recent_history()
             print("开始运行 agent...")
             answer = agent_chain.run(query)
         return answer
@@ -68,6 +69,12 @@ def generate_answer(query):
 
 def get_history():
     return memory.buffer
+
+
+def delete_recent_history():
+    pass
+    # print("delete_recent_history")
+    # memory.messages = memory.messages[:-2]
 
 
 def clear_history():
