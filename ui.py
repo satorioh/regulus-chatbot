@@ -1,5 +1,5 @@
 import streamlit as st
-from llm import init_agent
+from llm import generate_answer, get_history, clear_history
 
 MAX_CONTEXT = 1000
 
@@ -22,16 +22,12 @@ answer_dom = st.empty()
 st.write("")
 
 
-@st.cache_resource
-def get_agent():
-    agent = init_agent()
-    return agent
+def get_answer(query):
+    return generate_answer(query)
 
 
-agent = get_agent()
-
-
-def display_history(history=None):
+def display_history():
+    history = get_history()
     if history != None:
         text = ""
         for index, item in enumerate(history):
@@ -44,10 +40,9 @@ def display_history(history=None):
 def predict(input):
     try:
         with st.spinner('AI 思考中...'):
-            return agent.run(input=input)
+            return get_answer(input)
     except Exception as e:
         print(e)
-        return "我被你问崩溃了，呜呜呜"
 
 
 with st.form("form", True):
@@ -64,7 +59,7 @@ with st.form("form", True):
         btn_clear = st.form_submit_button("清除历史记录", use_container_width=True)
 
     if btn_send and user_input != "":
-        display_history(agent.memory.buffer)
+        display_history()
         question_dom.markdown(
             "🤠：{}\n\n".format(user_input))
         answer = predict(user_input)
@@ -73,4 +68,4 @@ with st.form("form", True):
 
     if btn_clear:
         history_dom.empty()
-        agent.memory.clear()
+        clear_history()
