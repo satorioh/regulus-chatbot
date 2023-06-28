@@ -21,7 +21,7 @@ llm = OpenAI(openai_api_key=OPENAI_API_KEY,
              temperature=0,
              model_name=MODEL_NAME)
 
-tools = load_tools(["llm-math"], llm=llm)
+tools = load_tools(["serpapi", "llm-math"], llm=llm)
 
 prompt = ZeroShotAgent.create_prompt(
     tools,
