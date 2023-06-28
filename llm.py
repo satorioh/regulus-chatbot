@@ -9,6 +9,7 @@ from utils import (
 from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
+    OPENAI_REQUEST_TIMEOUT,
     MODEL_NAME,
     AGENT_PREFIX,
     AGENT_SUFFIX,
@@ -21,6 +22,7 @@ print("init llm")
 llm = OpenAI(openai_api_key=OPENAI_API_KEY,
              openai_api_base=OPENAI_API_BASE,
              temperature=0,
+             request_timeout=OPENAI_REQUEST_TIMEOUT,
              model_name=MODEL_NAME)
 
 tools = load_tools(["serpapi", "llm-math"], llm=llm)
@@ -34,15 +36,16 @@ prompt = ZeroShotAgent.create_prompt(
 
 memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
 
-first_chain_prompt = PromptTemplate(input_variables=["chat_history", "input"], template=DEFAULT_TEMPLATE)
+first_chain_prompt = PromptTemplate(input_variables=["input", "chat_history"], template=DEFAULT_TEMPLATE)
 
 conversation = ConversationChain(
     llm=llm,
     memory=memory,
-    prompt=first_chain_prompt
+    prompt=first_chain_prompt,
+    verbose=True
 )
 
-llm_chain = LLMChain(llm=OpenAI(temperature=0), prompt=prompt)
+llm_chain = LLMChain(llm=llm, prompt=prompt)
 agent = ZeroShotAgent(llm_chain=llm_chain, tools=tools, verbose=True)
 agent_chain = AgentExecutor.from_agent_and_tools(
     agent=agent, tools=tools, verbose=True, memory=memory,
@@ -64,8 +67,9 @@ def generate_answer(query):
 
 
 def get_history():
-    return agent_chain.memory.buffer
+    return memory.buffer
 
 
 def clear_history():
-    agent_chain.memory.clear()
+    print("clear history")
+    memory.clear()

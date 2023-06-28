@@ -70,4 +70,4 @@ with st.form("form", True):
 
         if btn_clear:
             history_dom.empty()
-        clear_history()
+            clear_history()
