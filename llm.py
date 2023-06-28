@@ -10,6 +10,7 @@ from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
     OPENAI_REQUEST_TIMEOUT,
+    OPENAI_TEMPERATURE,
     MODEL_NAME,
     AGENT_PREFIX,
     AGENT_SUFFIX,
@@ -21,7 +22,7 @@ print("init llm")
 
 llm = OpenAI(openai_api_key=OPENAI_API_KEY,
              openai_api_base=OPENAI_API_BASE,
-             temperature=0,
+             temperature=OPENAI_TEMPERATURE,
              request_timeout=OPENAI_REQUEST_TIMEOUT,
              model_name=MODEL_NAME)
 
@@ -59,6 +60,7 @@ def generate_answer(query):
         answer = conversation.run(query)
         if check_fail_keywords(answer):
             delete_recent_history()
+            print(f"失败的回答：{answer}")
             print("开始运行 agent...")
             answer = agent_chain.run(query)
         return answer
@@ -72,9 +74,13 @@ def get_history():
 
 
 def delete_recent_history():
-    pass
-    # print("delete_recent_history")
-    # memory.messages = memory.messages[:-2]
+    print("delete_recent_history")
+    history = get_history()
+    clear_history()
+    history = history[:-2]  # 删除最后一次历史对话
+    result = [{"input": x.content, "output": y.content} for x, y in zip(history[::2], history[1::2])]
+    for item in result:
+        memory.save_context({"input": item["input"]}, {"output": item["output"]})
 
 
 def clear_history():
