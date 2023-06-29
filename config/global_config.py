@@ -24,4 +24,4 @@ ERROR_RESPONSE = "我被你问崩溃了，呜呜呜"
 MAX_CONTEXT = 1000
 USER_EMOJI = "🤠"
 BOT_EMOJI = "🤖"
-FAIL_KEYWORDS = ["很抱歉", "sorry", "不知道", "not know", "不好意思", "无法提供", "无法访问"]
+FAIL_KEYWORDS = ["很抱歉", "sorry", "对不起", "不知道", "not know", "不好意思", "无法提供", "无法访问"]

@@ -1,8 +1,10 @@
 from langchain.agents import load_tools, ZeroShotAgent, AgentExecutor
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.llms import OpenAI
-from langchain import LLMChain, PromptTemplate
+from langchain.tools import Tool
+from langchain import LLMChain, LLMMathChain, PromptTemplate
 from langchain.chains import ConversationChain
+from langchain.utilities import GoogleSearchAPIWrapper
 from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
@@ -26,7 +28,23 @@ def init_llm():
                  request_timeout=OPENAI_REQUEST_TIMEOUT,
                  model_name=MODEL_NAME)
 
-    tools = load_tools(["serpapi", "llm-math"], llm=llm)
+    # tools = load_tools(["Google Search", "llm-math"], llm=llm)
+    search = GoogleSearchAPIWrapper(k=3)
+    llm_math_chain = LLMMathChain(llm=llm)
+
+    tools = [
+        Tool(
+            name="Google Search",
+            description="Search Google for current events or recent results.",
+            func=search.run,
+        ),
+        Tool(
+            name="Calculator",
+            func=llm_math_chain.run,
+            description="useful for when you need to answer questions about math",
+            return_direct=True,
+        )
+    ]
 
     prompt = ZeroShotAgent.create_prompt(
         tools,

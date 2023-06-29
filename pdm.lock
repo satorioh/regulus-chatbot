@@ -194,12 +194,69 @@ dependencies = [
 ]
 
 [[package]]
+name = "google-api-core"
+version = "2.11.1"
+requires_python = ">=3.7"
+summary = "Google API client core library"
+dependencies = [
+    "google-auth<3.0.dev0,>=2.14.1",
+    "googleapis-common-protos<2.0.dev0,>=1.56.2",
+    "protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0.dev0,>=3.19.5",
+    "requests<3.0.0.dev0,>=2.18.0",
+]
+
+[[package]]
+name = "google-api-python-client"
+version = "2.90.0"
+requires_python = ">=3.7"
+summary = "Google API Client Library for Python"
+dependencies = [
+    "google-api-core!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0,<3.0.0.dev0,>=1.31.5",
+    "google-auth-httplib2>=0.1.0",
+    "google-auth<3.0.0.dev0,>=1.19.0",
+    "httplib2<1.dev0,>=0.15.0",
+    "uritemplate<5,>=3.0.1",
+]
+
+[[package]]
+name = "google-auth"
+version = "2.21.0"
+requires_python = ">=3.6"
+summary = "Google Authentication Library"
+dependencies = [
+    "cachetools<6.0,>=2.0.0",
+    "pyasn1-modules>=0.2.1",
+    "rsa<5,>=3.1.4",
+    "six>=1.9.0",
+    "urllib3<2.0",
+]
+
+[[package]]
+name = "google-auth-httplib2"
+version = "0.1.0"
+summary = "Google Authentication Library: httplib2 transport"
+dependencies = [
+    "google-auth",
+    "httplib2>=0.15.0",
+    "six",
+]
+
+[[package]]
 name = "google-search-results"
 version = "2.4.2"
 requires_python = ">=3.5"
 summary = "Scrape and search localized results from Google, Bing, Baidu, Yahoo, Yandex, Ebay, Homedepot, youtube at scale using SerpApi.com"
 dependencies = [
     "requests",
+]
+
+[[package]]
+name = "googleapis-common-protos"
+version = "1.59.1"
+requires_python = ">=3.7"
+summary = "Common protobufs used in Google APIs"
+dependencies = [
+    "protobuf!=3.20.0,!=3.20.1,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0.dev0,>=3.19.5",
 ]
 
 [[package]]
@@ -224,6 +281,15 @@ dependencies = [
     "certifi",
     "h11<0.15,>=0.13",
     "sniffio==1.*",
+]
+
+[[package]]
+name = "httplib2"
+version = "0.22.0"
+requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+summary = "A comprehensive HTTP client library."
+dependencies = [
+    "pyparsing!=3.0.0,!=3.0.1,!=3.0.2,!=3.0.3,<4,>=2.4.2; python_version > \"3.0\"",
 ]
 
 [[package]]
@@ -447,6 +513,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "pyasn1"
+version = "0.5.0"
+requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+summary = "Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)"
+
+[[package]]
+name = "pyasn1-modules"
+version = "0.3.0"
+requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+summary = "A collection of ASN.1-based protocols modules"
+dependencies = [
+    "pyasn1<0.6.0,>=0.4.6",
+]
+
+[[package]]
 name = "pydantic"
 version = "1.10.9"
 requires_python = ">=3.7"
@@ -476,6 +557,12 @@ name = "pympler"
 version = "1.0.1"
 requires_python = ">=3.6"
 summary = "A development tool to measure, monitor and analyze the memory behavior of Python objects."
+
+[[package]]
+name = "pyparsing"
+version = "3.1.0"
+requires_python = ">=3.6.8"
+summary = "pyparsing module - Classes and methods to define and execute parsing grammars"
 
 [[package]]
 name = "pyrsistent"
@@ -544,6 +631,15 @@ summary = "Render rich text, tables, progress bars, syntax highlighting, markdow
 dependencies = [
     "markdown-it-py>=2.2.0",
     "pygments<3.0.0,>=2.13.0",
+]
+
+[[package]]
+name = "rsa"
+version = "4.9"
+requires_python = ">=3.6,<4"
+summary = "Pure-Python RSA implementation"
+dependencies = [
+    "pyasn1>=0.1.3",
 ]
 
 [[package]]
@@ -686,9 +782,15 @@ requires_python = ">=3.8"
 summary = "Ultra fast JSON encoder and decoder for Python"
 
 [[package]]
+name = "uritemplate"
+version = "4.1.1"
+requires_python = ">=3.6"
+summary = "Implementation of RFC 6570 URI Templates"
+
+[[package]]
 name = "urllib3"
-version = "2.0.3"
-requires_python = ">=3.7"
+version = "1.26.16"
+requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 summary = "HTTP library with thread-safe connection pooling, file post, and more."
 
 [[package]]
@@ -774,7 +876,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 lock_version = "4.2"
 cross_platform = true
 groups = ["default"]
-content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea5e2918c"
+content_hash = "sha256:89ac292fb4906d0cf37e463c1a9e89048ccbafe158da77284f4ae478d8b1335c"
 
 [metadata.files]
 "aiohttp 3.8.4" = [
@@ -1091,8 +1193,28 @@ content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea
     {url = "https://mirrors.aliyun.com/pypi/packages/5f/11/2b0f60686dbda49028cec8c66bd18a5e82c96d92eef4bc34961e35bb3762/GitPython-3.1.31.tar.gz", hash = "sha256:8ce3bcf69adfdf7c7d503e78fd3b1c492af782d58893b650adb2ac8912ddd573"},
     {url = "https://mirrors.aliyun.com/pypi/packages/9e/8a/d1e02cc111d65b0346f70abb83c51f8593e7134bf694a4a56d1a470caaf7/GitPython-3.1.31-py3-none-any.whl", hash = "sha256:f04893614f6aa713a60cbbe1e6a97403ef633103cdd0ef5eb6efe0deb98dbe8d"},
 ]
+"google-api-core 2.11.1" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/6e/c4/c3cd048b6cbeba8d9ae50dd7643ac065b85237338aa7501b0efae91eb4d9/google_api_core-2.11.1-py3-none-any.whl", hash = "sha256:d92a5a92dc36dd4f4b9ee4e55528a90e432b059f93aee6ad857f9de8cc7ae94a"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/f3/b8/f727ada5b63aba53848e3791dd57be7481d5c9bf86978600ca9cca4ab03e/google-api-core-2.11.1.tar.gz", hash = "sha256:25d29e05a0058ed5f19c61c0a78b1b53adea4d9364b464d014fbda941f6d1c9a"},
+]
+"google-api-python-client 2.90.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/35/8b/d990f947c261304a5c1599d45717d02c27d46af5f23e1fee5dc19c8fa79d/google-api-python-client-2.90.0.tar.gz", hash = "sha256:cbcb3ba8be37c6806676a49df16ac412077e5e5dc7fa967941eff977b31fba03"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/39/03/209b5c36a621ae644dc7d4743746cd3b38b18e133f8779ecaf6b95cc01ce/google_api_python_client-2.90.0-py2.py3-none-any.whl", hash = "sha256:4a41ffb7797d4f28e44635fb1e7076240b741c6493e7c3233c0e4421cec7c913"},
+]
+"google-auth 2.21.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/0d/77/4737ca3b929e95df9234827f7ddcf66199df2d96057ba9a98168957de7fa/google_auth-2.21.0-py2.py3-none-any.whl", hash = "sha256:da3f18d074fa0f5a7061d99b9af8cee3aa6189c987af7c1b07d94566b6b11268"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/e6/76/2217d47be6a03dfd5f6bfe7432f87a5aa5ab6d85525a4dc546df9895f053/google-auth-2.21.0.tar.gz", hash = "sha256:b28e8048e57727e7cf0e5bd8e7276b212aef476654a09511354aa82753b45c66"},
+]
+"google-auth-httplib2 0.1.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/ba/db/721e2f3f32339080153995d16e46edc3a7657251f167ddcb9327e632783b/google_auth_httplib2-0.1.0-py2.py3-none-any.whl", hash = "sha256:31e49c36c6b5643b57e82617cb3e021e3e1d2df9da63af67252c02fa9c1f4a10"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/c6/b5/a9e956fd904ecb34ec9d297616fe98fa4106fc12f3b0a914dec983c267b9/google-auth-httplib2-0.1.0.tar.gz", hash = "sha256:a07c39fd632becacd3f07718dfd6021bf396978f03ad3ce4321d060015cc30ac"},
+]
 "google-search-results 2.4.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/77/30/b3a6f6a2e00f8153549c2fa345c58ae1ce8e5f3153c2fe0484d444c3abcb/google_search_results-2.4.2.tar.gz", hash = "sha256:603a30ecae2af8e600b22635757a6df275dad4b934f975e67878ccd640b78245"},
+]
+"googleapis-common-protos 1.59.1" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/28/9b/ea531afe585da044686ab13351c99dfbb2ca02b96c396874946d52d0e127/googleapis-common-protos-1.59.1.tar.gz", hash = "sha256:b35d530fe825fb4227857bc47ad84c33c809ac96f312e13182bdeaa2abe1178a"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/b3/b7/bbaa556e9ff0580f408c64ccf4db0c1414eec79e7151d33a10bc209ffb6d/googleapis_common_protos-1.59.1-py2.py3-none-any.whl", hash = "sha256:0cbedb6fb68f1c07e18eb4c48256320777707e7d0c55063ae56c15db3224a61e"},
 ]
 "greenlet 2.0.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/07/ef/6bfa2ea34f76dea02833d66d28ae7cf4729ddab74ee93ee069c7f1d47c4f/greenlet-2.0.2-cp37-cp37m-macosx_10_15_x86_64.whl", hash = "sha256:d5508f0b173e6aa47273bdc0a0b5ba055b59662ba7c7ee5119528f466585526b"},
@@ -1163,6 +1285,10 @@ content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea
 "httpcore 0.17.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/4d/32/b908f673ccef12b6425b848a541264ee3d95f5f571f18f6ab0d8c311442e/httpcore-0.17.2-py3-none-any.whl", hash = "sha256:5581b9c12379c4288fe70f43c710d16060c10080617001e6b22a3b6dbcbefd36"},
     {url = "https://mirrors.aliyun.com/pypi/packages/b3/ad/7002a6f8e6ce0a246c991e00ba79b26ad06d307421a160214df24de5651f/httpcore-0.17.2.tar.gz", hash = "sha256:125f8375ab60036db632f34f4b627a9ad085048eef7cb7d2616fea0f739f98af"},
+]
+"httplib2 0.22.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/3d/ad/2371116b22d616c194aa25ec410c9c6c37f23599dcd590502b74db197584/httplib2-0.22.0.tar.gz", hash = "sha256:d7a10bc5ef5ab08322488bde8c726eeee5c8618723fdb399597ec58f3d82df81"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/a8/6c/d2fbdaaa5959339d53ba38e94c123e4e84b8fbc4b84beb0e70d7c1608486/httplib2-0.22.0-py3-none-any.whl", hash = "sha256:14ae0a53c1ba8f3d37e9e27cf37eabb0fb9980f435ba405d546948b009dd64dc"},
 ]
 "httptools 0.5.0" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/01/72/65b1f74371b2673b6833663f653ef6c5575d3fc481df3053a38f90535b59/httptools-0.5.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c1d2357f791b12d86faced7b5736dea9ef4f5ecdc6c3f253e445ee82da579449"},
@@ -1643,6 +1769,14 @@ content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea
     {url = "https://mirrors.aliyun.com/pypi/packages/dc/45/31441c988329afed625a791a7d78f1cf2fcb40dcc86a1d61e081287516a8/pyarrow-12.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:3de26da901216149ce086920547dfff5cd22818c9eab67ebc41e863a5883bac7"},
     {url = "https://mirrors.aliyun.com/pypi/packages/e1/91/676b6ef5181fd0229ec35477eb94ff55fc5114ebab7a4669db311ddc9385/pyarrow-12.0.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9120c3eb2b1f6f516a3b7a9714ed860882d9ef98c4b17edcdc91d95b7528db60"},
 ]
+"pyasn1 0.5.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/14/e5/b56a725cbde139aa960c26a1a3ca4d4af437282e20b5314ee6a3501e7dfc/pyasn1-0.5.0-py2.py3-none-any.whl", hash = "sha256:87a2121042a1ac9358cabcaf1d07680ff97ee6404333bacca15f76aa8ad01a57"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/61/ef/945a8bcda7895717c8ba4688c08a11ef6454f32b8e5cb6e352a9004ee89d/pyasn1-0.5.0.tar.gz", hash = "sha256:97b7290ca68e62a832558ec3976f15cbf911bf5d7c7039d8b861c2a0ece69fde"},
+]
+"pyasn1-modules 0.3.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/3b/e4/7dec823b1b5603c5b3c51e942d5d9e65efd6ff946e713a325ed4146d070f/pyasn1_modules-0.3.0.tar.gz", hash = "sha256:5bd01446b736eb9d31512a30d46c1ac3395d676c6f3cafa4c03eb54b9925631c"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/cd/8e/bea464350e1b8c6ed0da3a312659cb648804a08af6cacc6435867f74f8bd/pyasn1_modules-0.3.0-py2.py3-none-any.whl", hash = "sha256:d3ccd6ed470d9ffbc716be08bd90efbd44d0734bc9303818f7336070984a162d"},
+]
 "pydantic 1.10.9" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/02/05/1c505fd7cc174ddecd5aa956057638ba6039b584af6fa9687f11a074fca7/pydantic-1.10.9-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:83fcff3c7df7adff880622a98022626f4f6dbce6639a88a15a3ce0f96466cb60"},
     {url = "https://mirrors.aliyun.com/pypi/packages/0a/53/5dbbfac34a8040d9af562287d7604d001170b88aa0df6789ce670aa77718/pydantic-1.10.9-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:2196c06484da2b3fded1ab6dbe182bdabeb09f6318b7fdc412609ee2b564c49a"},
@@ -1692,6 +1826,10 @@ content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea
 "pympler 1.0.1" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/12/b7/9d17fbb2fde0b035dbd27e5d82dfbcd3fa990cf5a469cef8e89712d16113/Pympler-1.0.1.tar.gz", hash = "sha256:993f1a3599ca3f4fcd7160c7545ad06310c9e12f70174ae7ae8d4e25f6c5d3fa"},
     {url = "https://mirrors.aliyun.com/pypi/packages/2c/42/41e1469ed0b37b9c8532cb8074bea179f7d85ee7e82a59b5b6c289ed6045/Pympler-1.0.1-py3-none-any.whl", hash = "sha256:d260dda9ae781e1eab6ea15bacb84015849833ba5555f141d2d9b7b7473b307d"},
+]
+"pyparsing 3.1.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/4f/13/28e88033cab976721512e7741000fb0635fa078045e530a91abb25aea0c0/pyparsing-3.1.0.tar.gz", hash = "sha256:edb662d6fe322d6e990b1594b5feaeadf806803359e3d4d42f11e295e588f0ea"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/a4/24/6ae4c9c45cf99d96b06b5d99e25526c060303171fb0aea9da2bfd7dbde93/pyparsing-3.1.0-py3-none-any.whl", hash = "sha256:d554a96d1a7d3ddaf7183104485bc19fd80543ad6ac5bdb6426719d766fb06c1"},
 ]
 "pyrsistent 0.19.3" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/07/d2/0e72806d668c001d13885e8d7c78fefa5a649c34ad9d77b90eb472096ae7/pyrsistent-0.19.3-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cc5d149f31706762c1f8bda2e8c4f8fead6e80312e3692619a75301d3dbb819a"},
@@ -1791,6 +1929,10 @@ content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea
 "rich 13.4.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/e3/12/67d0098eb77005f5e068de639e6f4cfb8f24e6fcb0fd2037df0e1d538fee/rich-13.4.2.tar.gz", hash = "sha256:d653d6bccede5844304c605d5aac802c7cf9621efd700b46c7ec2b51ea914898"},
     {url = "https://mirrors.aliyun.com/pypi/packages/fc/1e/482e5eec0b89b593e81d78f819a9412849814e22225842b598908e7ac560/rich-13.4.2-py3-none-any.whl", hash = "sha256:8f87bc7ee54675732fa66a05ebfe489e27264caeeff3728c945d25971b6485ec"},
+]
+"rsa 4.9" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/49/97/fa78e3d2f65c02c8e1268b9aba606569fe97f6c8f7c2d74394553347c145/rsa-4.9-py3-none-any.whl", hash = "sha256:90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/aa/65/7d973b89c4d2351d7fb232c2e452547ddfa243e93131e7cfa766da627b52/rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21"},
 ]
 "six 1.16.0" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
@@ -1963,9 +2105,13 @@ content_hash = "sha256:8b0b4a692d45161a81aa89d6cb801f8e17ba8fcfa5c698aa4d62e11ea
     {url = "https://mirrors.aliyun.com/pypi/packages/fd/0d/9b97d3cefd91e0302497e75d0f36c946fbee31351e9c3b80a7631b38d2f9/ujson-5.8.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:299a312c3e85edee1178cb6453645217ba23b4e3186412677fa48e9a7f986de6"},
     {url = "https://mirrors.aliyun.com/pypi/packages/fd/85/2845b952d2e22e9717224d0c0f4af86b204959ffb338fd47c896648ee7b2/ujson-5.8.0-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d53039d39de65360e924b511c7ca1a67b0975c34c015dd468fca492b11caa8f7"},
 ]
-"urllib3 2.0.3" = [
-    {url = "https://mirrors.aliyun.com/pypi/packages/8a/03/ad9306a50d05c166e3456fe810f33cee2b8b2a7a6818ec5d4908c4ec6b36/urllib3-2.0.3-py3-none-any.whl", hash = "sha256:48e7fafa40319d358848e1bc6809b208340fafe2096f1725d05d67443d0483d1"},
-    {url = "https://mirrors.aliyun.com/pypi/packages/d6/af/3b4cfedd46b3addab52e84a71ab26518272c23c77116de3c61ead54af903/urllib3-2.0.3.tar.gz", hash = "sha256:bee28b5e56addb8226c96f7f13ac28cb4c301dd5ea8a6ca179c0b9835e032825"},
+"uritemplate 4.1.1" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/81/c0/7461b49cd25aeece13766f02ee576d1db528f1c37ce69aee300e075b485b/uritemplate-4.1.1-py2.py3-none-any.whl", hash = "sha256:830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/d2/5a/4742fdba39cd02a56226815abfa72fe0aa81c33bed16ed045647d6000eba/uritemplate-4.1.1.tar.gz", hash = "sha256:4346edfc5c3b79f694bccd6d6099a322bbeb628dbf2cd86eea55a456ce5124f0"},
+]
+"urllib3 1.26.16" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/c5/05/c214b32d21c0b465506f95c4f28ccbcba15022e000b043b72b3df7728471/urllib3-1.26.16-py2.py3-none-any.whl", hash = "sha256:8d36afa7616d8ab714608411b4a3b13e58f463aee519024578e062e141dce20f"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/e2/7d/539e6f0cf9f0b95b71dd701a56dae89f768cd39fd8ce0096af3546aeb5a3/urllib3-1.26.16.tar.gz", hash = "sha256:8f135f6502756bde6b2a9b28989df5fbe87c9970cecaa69041edcce7f0589b14"},
 ]
 "uvicorn 0.22.0" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/ad/bd/d47ee02312640fcf26c7e1c807402d5c5eab468571153a94ec8f7ada0e46/uvicorn-0.22.0-py3-none-any.whl", hash = "sha256:e9434d3bbf05f310e762147f769c9f21235ee118ba2d2bf1155a7196448bd996"},
