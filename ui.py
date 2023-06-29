@@ -1,9 +1,13 @@
 import streamlit as st
-from llm import generate_answer, get_history, clear_history
+from llm import init_llm
 from config.global_config import (
     MAX_CONTEXT,
+    ERROR_RESPONSE,
     USER_EMOJI,
     BOT_EMOJI
+)
+from utils import (
+    check_fail_keywords
 )
 
 st.set_page_config(
@@ -25,8 +29,21 @@ answer_dom = st.empty()
 st.write("")
 
 
-def get_answer(query):
-    return generate_answer(query)
+@st.cache_resource
+def get_llm():
+    return init_llm()
+
+
+conversation, agent_chain, memory = get_llm()
+
+
+def get_history():
+    return memory.buffer
+
+
+def clear_history():
+    print("clear history")
+    memory.clear()
 
 
 def display_history():
@@ -39,10 +56,34 @@ def display_history():
                 history_dom.markdown(text)
 
 
+def delete_recent_history():
+    print("delete_recent_history")
+    history = get_history()
+    clear_history()
+    history = history[:-2]  # 删除最后一次历史对话
+    result = [{"input": x.content, "output": y.content} for x, y in zip(history[::2], history[1::2])]
+    for item in result:
+        memory.save_context({"input": item["input"]}, {"output": item["output"]})
+
+
+def generate_answer(query):
+    try:
+        answer = conversation.run(query)
+        if check_fail_keywords(answer):
+            delete_recent_history()
+            print(f"失败的回答：{answer}")
+            print("开始运行 agent...")
+            answer = agent_chain.run(query)
+        return answer
+    except Exception as e:
+        print(e)
+        return ERROR_RESPONSE
+
+
 def predict(input):
     try:
         with st.spinner('AI 思考中...'):
-            return get_answer(input)
+            return generate_answer(input)
     except Exception as e:
         print(e)
 
