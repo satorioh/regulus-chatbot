@@ -52,7 +52,7 @@ def clear_history():
 
 
 def delete_recent_history():
-    print("delete_recent_history")
+    print("delete recent history")
     history = get_history()
     clear_history()
     history = history[:-2]  # 删除最后一次历史对话
