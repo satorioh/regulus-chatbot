@@ -1,4 +1,5 @@
 import streamlit as st
+from langchain.memory import ConversationBufferWindowMemory
 from llm import init_llm
 from config.global_config import (
     MAX_CONTEXT,
@@ -30,11 +31,21 @@ st.write("")
 
 
 @st.cache_resource
+def get_memory():
+    print("new memory")
+    return ConversationBufferWindowMemory(memory_key="chat_history", k=5)
+
+
+memory = get_memory()
+
+
+@st.cache_resource
 def get_llm():
-    return init_llm()
+    print("get llm")
+    return init_llm(memory)
 
 
-conversation, agent_chain, memory = get_llm()
+conversation, agent_chain = get_llm()
 
 
 def get_history():

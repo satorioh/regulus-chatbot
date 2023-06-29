@@ -1,4 +1,3 @@
-from langchain.memory import ConversationBufferWindowMemory
 from langchain.agents import load_tools, ZeroShotAgent, AgentExecutor
 from langchain.llms import OpenAI
 from langchain import LLMChain, PromptTemplate
@@ -15,7 +14,7 @@ from config.global_config import (
 )
 
 
-def init_llm():
+def init_llm(memory):
     print("init llm")
 
     llm = OpenAI(openai_api_key=OPENAI_API_KEY,
@@ -33,8 +32,6 @@ def init_llm():
         input_variables=["input", "chat_history", "agent_scratchpad"],
     )
 
-    memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
-
     first_chain_prompt = PromptTemplate(input_variables=["input", "chat_history"], template=DEFAULT_TEMPLATE)
 
     conversation = ConversationChain(
@@ -51,4 +48,4 @@ def init_llm():
         max_iterations=6,
         handle_parsing_errors="Check your output and make sure it conforms!"
     )
-    return conversation, agent_chain, memory
+    return conversation, agent_chain
