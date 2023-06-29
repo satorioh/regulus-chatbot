@@ -1,14 +1,14 @@
 import streamlit as st
 from langchain.memory import ConversationBufferWindowMemory
 from llm import init_llm
-from config.global_config import (
-    MAX_CONTEXT,
-    ERROR_RESPONSE,
-    USER_EMOJI,
-    BOT_EMOJI
-)
 from utils import (
     check_fail_keywords
+)
+from config.global_config import (
+    MAX_CONTEXT,
+    USER_EMOJI,
+    BOT_EMOJI,
+    ERROR_RESPONSE,
 )
 
 st.set_page_config(
@@ -29,42 +29,27 @@ question_dom = st.markdown(
 answer_dom = st.empty()
 st.write("")
 
-
-@st.cache_resource
-def get_memory():
-    print("new memory")
-    return ConversationBufferWindowMemory(memory_key="chat_history", k=5)
-
-
-memory = get_memory()
+if 'memory' not in st.session_state:
+    print("init session memory")
+    st.session_state.memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
 
 
 @st.cache_resource
 def get_llm():
     print("get llm")
-    return init_llm(memory)
+    return init_llm(st.session_state.memory)
 
 
 conversation, agent_chain = get_llm()
 
 
 def get_history():
-    return memory.buffer
+    return st.session_state.memory.buffer
 
 
 def clear_history():
     print("clear history")
-    memory.clear()
-
-
-def display_history():
-    history = get_history()
-    if history != None:
-        text = ""
-        for index, item in enumerate(history):
-            if index % 2 == 0:
-                text += f"{USER_EMOJI}：{item.content}\n\n{BOT_EMOJI}：{history[index + 1].content}\n\n---\n"
-                history_dom.markdown(text)
+    st.session_state.memory.clear()
 
 
 def delete_recent_history():
@@ -74,7 +59,7 @@ def delete_recent_history():
     history = history[:-2]  # 删除最后一次历史对话
     result = [{"input": x.content, "output": y.content} for x, y in zip(history[::2], history[1::2])]
     for item in result:
-        memory.save_context({"input": item["input"]}, {"output": item["output"]})
+        st.session_state.memory.save_context({"input": item["input"]}, {"output": item["output"]})
 
 
 def generate_answer(query):
@@ -89,6 +74,16 @@ def generate_answer(query):
     except Exception as e:
         print(e)
         return ERROR_RESPONSE
+
+
+def display_history():
+    history = get_history()
+    if history != None:
+        text = ""
+        for index, item in enumerate(history):
+            if index % 2 == 0:
+                text += f"{USER_EMOJI}：{item.content}\n\n{BOT_EMOJI}：{history[index + 1].content}\n\n---\n"
+                history_dom.markdown(text)
 
 
 def predict(input):

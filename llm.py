@@ -2,6 +2,9 @@ from langchain.agents import load_tools, ZeroShotAgent, AgentExecutor
 from langchain.llms import OpenAI
 from langchain import LLMChain, PromptTemplate
 from langchain.chains import ConversationChain
+from utils import (
+    check_fail_keywords
+)
 from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
@@ -10,7 +13,8 @@ from config.global_config import (
     MODEL_NAME,
     AGENT_PREFIX,
     AGENT_SUFFIX,
-    DEFAULT_TEMPLATE
+    DEFAULT_TEMPLATE,
+    ERROR_RESPONSE,
 )
 
 
