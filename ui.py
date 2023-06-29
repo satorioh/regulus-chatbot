@@ -29,18 +29,18 @@ question_dom = st.markdown(
 answer_dom = st.empty()
 st.write("")
 
-if 'memory' not in st.session_state:
-    print("init session memory")
-    st.session_state.memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
 
-
-@st.cache_resource
 def get_llm():
     print("get llm")
-    return init_llm(st.session_state.memory)
+    return init_llm()
 
 
-conversation, agent_chain = get_llm()
+if 'conversation' not in st.session_state:
+    print("init session")
+    conversation, agent_chain, memory = get_llm()
+    st.session_state.conversation = conversation
+    st.session_state.agent_chain = agent_chain
+    st.session_state.memory = memory
 
 
 def get_history():
@@ -64,12 +64,12 @@ def delete_recent_history():
 
 def generate_answer(query):
     try:
-        answer = conversation.run(query)
+        answer = st.session_state.conversation.run(query)
         if check_fail_keywords(answer):
             delete_recent_history()
             print(f"失败的回答：{answer}")
             print("开始运行 agent...")
-            answer = agent_chain.run(query)
+            answer = st.session_state.agent_chain.run(query)
         return answer
     except Exception as e:
         print(e)
