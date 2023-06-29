@@ -1,5 +1,4 @@
 import streamlit as st
-from langchain.memory import ConversationBufferWindowMemory
 from llm import init_llm
 from utils import (
     check_fail_keywords
