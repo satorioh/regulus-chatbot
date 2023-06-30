@@ -4,7 +4,7 @@ from langchain.llms import OpenAI
 from langchain.tools import Tool
 from langchain import LLMChain, LLMMathChain, PromptTemplate
 from langchain.chains import ConversationChain
-from langchain.utilities import GoogleSearchAPIWrapper
+from langchain.utilities import GoogleSearchAPIWrapper, SerpAPIWrapper
 from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
@@ -29,7 +29,8 @@ def init_llm():
                  model_name=MODEL_NAME)
 
     # tools = load_tools(["Google Search", "llm-math"], llm=llm)
-    search = GoogleSearchAPIWrapper(k=3)
+    # search = GoogleSearchAPIWrapper(k=3)
+    search = SerpAPIWrapper()
     llm_math_chain = LLMMathChain(llm=llm)
 
     tools = [
