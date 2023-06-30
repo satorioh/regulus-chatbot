@@ -42,7 +42,7 @@ def init_llm():
         Tool(
             name="Calculator",
             func=llm_math_chain.run,
-            description="useful for when you need to answer questions about math",
+            description="useful for when you need to answer questions about math. But when the human asked if you can do arithmeti, you just answer 'YES', and do not use this tool",
             return_direct=True,
         )
     ]
