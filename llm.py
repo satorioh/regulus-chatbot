@@ -30,7 +30,10 @@ def init_llm():
 
     # tools = load_tools(["Google Search", "llm-math"], llm=llm)
     # search = GoogleSearchAPIWrapper(k=3)
-    search = SerpAPIWrapper()
+    search = SerpAPIWrapper(params={"engine": "google",
+                                    "google_domain": "google.com",
+                                    "gl": "cn",
+                                    "hl": "en", })
     llm_math_chain = LLMMathChain(llm=llm)
 
     tools = [
