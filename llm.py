@@ -33,7 +33,7 @@ def init_llm():
     search = SerpAPIWrapper(params={"engine": "google",
                                     "google_domain": "google.com",
                                     "gl": "cn",
-                                    "hl": "en", })
+                                    "hl": "zh-cn", })
     llm_math_chain = LLMMathChain(llm=llm)
 
     tools = [
