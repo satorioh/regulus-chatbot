@@ -23,7 +23,9 @@ AI:"""
 
 TRANSLATION_PROMPT = """
 Translate the following text to {languages}: \
-```{input}```
+```{input}``` \
+
+show result using table with two columns(first column is 'language', second column is 'translation')
 """
 
 ERROR_RESPONSE = "我被你问崩溃了，呜呜呜"
