@@ -31,7 +31,9 @@ MAX_CONTEXT = 1000
 USER_EMOJI = "🤠"
 BOT_EMOJI = "🤖"
 TRANSLATION_EMOJI = "📚"
-SUPPORTED_LANGUAGES = [
+WARNING_EMOJI = "⚠️"
+DEFAULT_TRANSLATE_LANGUAGE = ["Chinese (Simplified)"]
+SUPPORTED_TRANSLATE_LANGUAGES = [
     "Afrikaans",
     "Albanian",
     "Amharic",
