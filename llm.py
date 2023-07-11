@@ -13,20 +13,21 @@ from config.global_config import (
     MODEL_NAME,
     AGENT_PREFIX,
     AGENT_SUFFIX,
-    DEFAULT_TEMPLATE
+    DEFAULT_TEMPLATE,
+    TRANSLATION_PROMPT
 )
 
+llm = OpenAI(openai_api_key=OPENAI_API_KEY,
+             openai_api_base=OPENAI_API_BASE,
+             temperature=OPENAI_TEMPERATURE,
+             request_timeout=OPENAI_REQUEST_TIMEOUT,
+             model_name=MODEL_NAME)
 
-def init_llm():
+
+def init_chatbot():
     print("init llm")
 
     memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
-
-    llm = OpenAI(openai_api_key=OPENAI_API_KEY,
-                 openai_api_base=OPENAI_API_BASE,
-                 temperature=OPENAI_TEMPERATURE,
-                 request_timeout=OPENAI_REQUEST_TIMEOUT,
-                 model_name=MODEL_NAME)
 
     # tools = load_tools(["Google Search", "llm-math"], llm=llm)
     # search = GoogleSearchAPIWrapper(k=3)
@@ -74,3 +75,7 @@ def init_llm():
         handle_parsing_errors="Check your output and make sure it conforms!"
     )
     return conversation, agent_chain, memory
+
+
+def init_translator():
+    return PromptTemplate(input_variables=["input", "languages"], template=TRANSLATION_PROMPT)
