@@ -1,6 +1,6 @@
 import streamlit as st
-from components.chatbot import chatbot
-from components.translation import translation
+from components.chatbot import chatbot_page
+from components.translation import translation_page
 
 st.set_page_config(
     page_title="Regulus Chatbot",
@@ -15,10 +15,10 @@ st.set_page_config(
 tab1, tab2, tab3 = st.tabs(["聊天", "翻译", "总结"])
 
 with tab1:
-    chatbot()
+    chatbot_page()
 
 with tab2:
-    translation()
+    translation_page()
 
 with tab3:
     pass

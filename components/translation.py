@@ -8,7 +8,33 @@ from config.global_config import (
 )
 
 
-def translation():
+def get_translator():
+    print("get translator")
+    return init_translator()
+
+
+translator = get_translator()
+
+
+def generate_answer(input, options):
+    try:
+        languages = " and ".join(options)
+        answer = translator.run({"input": input, "languages": languages})
+        return answer
+    except Exception as e:
+        print(e)
+        return ERROR_RESPONSE
+
+
+def translation(input, options):
+    try:
+        with st.spinner('AI 思考中...'):
+            return generate_answer(input, options)
+    except Exception as e:
+        print(e)
+
+
+def translation_page():
     print("run translation...")
     st.title(f"Regulus Translator {TRANSLATION_EMOJI}")
     question_dom = st.markdown(
@@ -30,38 +56,15 @@ def translation():
         with col2:
             btn_clear = st.form_submit_button("清除", use_container_width=True)
 
+        options = st.multiselect(
+            '目标语种（支持多选）',
+            SUPPORTED_LANGUAGES,
+            ['English'])
+
         if btn_send and user_input != "":
-            # answer = predict(user_input)
-            answer = ""
+            answer = translation(user_input, options)
             print(f"翻译：{answer}", flush=True)
             answer_dom.markdown(f"{answer}")
 
             if btn_clear:
                 pass
-
-    options = st.multiselect(
-        '目标语种（支持多选）',
-        SUPPORTED_LANGUAGES,
-        ['English'])
-
-    def get_translator():
-        print("get translator")
-        return init_translator()
-
-    translator = get_translator()
-
-    def generate_answer(input):
-        try:
-            languages = " and ".join(options)
-            answer = translator.format(input=input, languages=languages)
-            return answer
-        except Exception as e:
-            print(e)
-            return ERROR_RESPONSE
-
-    def translation(input):
-        try:
-            with st.spinner('AI 思考中...'):
-                return generate_answer(input)
-        except Exception as e:
-            print(e)

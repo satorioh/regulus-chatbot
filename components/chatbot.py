@@ -11,7 +11,7 @@ from config.global_config import (
 )
 
 
-def chatbot():
+def chatbot_page():
     print("run chatbot...")
     st.title(f"Regulus Chatbot {BOT_EMOJI}")
     history_dom = st.empty()
