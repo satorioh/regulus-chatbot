@@ -148,4 +148,4 @@ SUPPORTED_TRANSLATE_LANGUAGES = [
     "Yoruba",
     "Zulu"
 ]
-FAIL_KEYWORDS = ["sorry", "对不起", "不知道", "not know", "不好意思", "无法提供", "无法访问"]
+FAIL_KEYWORDS = ["sorry", "对不起", "抱歉", "不知道", "not know", "不好意思", "无法提供", "无法访问"]

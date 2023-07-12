@@ -332,6 +332,12 @@ requires_python = ">=3.7"
 summary = "Safely pass data to untrusted environments and back."
 
 [[package]]
+name = "jaraco-context"
+version = "4.3.0"
+requires_python = ">=3.7"
+summary = "Context managers by jaraco"
+
+[[package]]
 name = "jinja2"
 version = "3.1.2"
 requires_python = ">=3.7"
@@ -418,6 +424,12 @@ name = "mdurl"
 version = "0.1.2"
 requires_python = ">=3.7"
 summary = "Markdown URL utilities"
+
+[[package]]
+name = "more-itertools"
+version = "9.1.0"
+requires_python = ">=3.7"
+summary = "More routines for operating on iterables, beyond itertools"
 
 [[package]]
 name = "multidict"
@@ -857,6 +869,23 @@ requires_python = ">=3.7"
 summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 
 [[package]]
+name = "wolframalpha"
+version = "5.0.0"
+requires_python = ">=3.6"
+summary = "Wolfram|Alpha 2.0 API client"
+dependencies = [
+    "jaraco-context",
+    "more-itertools",
+    "xmltodict",
+]
+
+[[package]]
+name = "xmltodict"
+version = "0.13.0"
+requires_python = ">=3.4"
+summary = "Makes working with XML feel like you are working with JSON"
+
+[[package]]
 name = "yarl"
 version = "1.9.2"
 requires_python = ">=3.7"
@@ -876,7 +905,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 lock_version = "4.2"
 cross_platform = true
 groups = ["default"]
-content_hash = "sha256:89ac292fb4906d0cf37e463c1a9e89048ccbafe158da77284f4ae478d8b1335c"
+content_hash = "sha256:032ba4605049d9035006bd0b6e6b0518e9ce995b5b4e9cb7664fbce0639df98a"
 
 [metadata.files]
 "aiohttp 3.8.4" = [
@@ -1349,6 +1378,10 @@ content_hash = "sha256:89ac292fb4906d0cf37e463c1a9e89048ccbafe158da77284f4ae478d
     {url = "https://mirrors.aliyun.com/pypi/packages/68/5f/447e04e828f47465eeab35b5d408b7ebaaaee207f48b7136c5a7267a30ae/itsdangerous-2.1.2-py3-none-any.whl", hash = "sha256:2c2349112351b88699d8d4b6b075022c0808887cb7ad10069318a8b0bc88db44"},
     {url = "https://mirrors.aliyun.com/pypi/packages/7f/a1/d3fb83e7a61fa0c0d3d08ad0a94ddbeff3731c05212617dff3a94e097f08/itsdangerous-2.1.2.tar.gz", hash = "sha256:5dbbc68b317e5e42f327f9021763545dc3fc3bfe22e6deb96aaf1fc38874156a"},
 ]
+"jaraco-context 4.3.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/0a/de/3f889cd55e69f0a91b396f6799ca31ea0d6869cde338e7c79335699090cb/jaraco.context-4.3.0-py3-none-any.whl", hash = "sha256:5d9e95ca0faa78943ed66f6bc658dd637430f16125d86988e77844c741ff2f11"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/7c/b4/fa71f82b83ebeed95fe45ce587d6cba85b7c09ef3d9f61602f92f45e90db/jaraco.context-4.3.0.tar.gz", hash = "sha256:4dad2404540b936a20acedec53355bdaea223acb88fd329fa6de9261c941566e"},
+]
 "jinja2 3.1.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/7a/ff/75c28576a1d900e87eb6335b063fab47a8ef3c8b4d88524c4bf78f670cce/Jinja2-3.1.2.tar.gz", hash = "sha256:31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"},
     {url = "https://mirrors.aliyun.com/pypi/packages/bc/c3/f068337a370801f372f2f8f6bad74a5c140f6fda3d9de154052708dd3c65/Jinja2-3.1.2-py3-none-any.whl", hash = "sha256:6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61"},
@@ -1432,6 +1465,10 @@ content_hash = "sha256:89ac292fb4906d0cf37e463c1a9e89048ccbafe158da77284f4ae478d
 "mdurl 0.1.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
     {url = "https://mirrors.aliyun.com/pypi/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
+]
+"more-itertools 9.1.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/2e/d0/bea165535891bd1dcb5152263603e902c0ec1f4c9a2e152cc4adff6b3a38/more-itertools-9.1.0.tar.gz", hash = "sha256:cabaa341ad0389ea83c17a94566a53ae4c9d07349861ecb14dc6d0345cf9ac5d"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/85/01/e2678ee4e0d7eed4fd6be9e5b043fff9d22d245d06c8c91def8ced664189/more_itertools-9.1.0-py3-none-any.whl", hash = "sha256:d2bc7f02446e86a68911e58ded76d6561eea00cddfb2a91e7019bbb586c799f3"},
 ]
 "multidict 6.0.4" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/00/bb/1cdffe9b1ab01830bc9255a64524c34b71c20a4affe5d1000b223a41698d/multidict-6.0.4-cp38-cp38-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:ddd3915998d93fbcd2566ddf9cf62cdb35c9e093075f862935573d265cf8f65d"},
@@ -2276,6 +2313,14 @@ content_hash = "sha256:89ac292fb4906d0cf37e463c1a9e89048ccbafe158da77284f4ae478d
     {url = "https://mirrors.aliyun.com/pypi/packages/ed/45/466944e00b324ae3a1fddb305b4abf641f582e131548f07bcd970971b154/websockets-11.0.3-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:ed058398f55163a79bb9f06a90ef9ccc063b204bb346c4de78efc5d15abfe602"},
     {url = "https://mirrors.aliyun.com/pypi/packages/f3/82/2d1f3395d47fab65fa8b801e2251b324300ed8db54753b6fb7919cef0c11/websockets-11.0.3-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:84d27a4832cc1a0ee07cdcf2b0629a8a72db73f4cf6de6f0904f6661227f256f"},
     {url = "https://mirrors.aliyun.com/pypi/packages/f4/3f/65dfa50084a06ab0a05f3ca74195c2c17a1c075b8361327d831ccce0a483/websockets-11.0.3-cp39-cp39-win_amd64.whl", hash = "sha256:c792ea4eabc0159535608fc5658a74d1a81020eb35195dd63214dcf07556f67e"},
+]
+"wolframalpha 5.0.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/89/3d/a117423c85669131d74aa9d2b8df1c68bb23e0cf6c055aa0ffd0747c7d1d/wolframalpha-5.0.0.tar.gz", hash = "sha256:38bf27654039ec85cc62c199dd319b6a4d6a7badfed7af1cd161f081afdb57c0"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/e1/83/bc28cd366bdbb5bca68d8442a485fc824d4ea16c358482b488149356d8d3/wolframalpha-5.0.0-py3-none-any.whl", hash = "sha256:159f5d8fd31e4a734a34a9f3ae8aec4e9b2ef392607f82069b4a324b6b1831d5"},
+]
+"xmltodict 0.13.0" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/39/0d/40df5be1e684bbaecdb9d1e0e40d5d482465de6b00cbb92b84ee5d243c7f/xmltodict-0.13.0.tar.gz", hash = "sha256:341595a488e3e01a85a9d8911d8912fd922ede5fecc4dce437eb4b6c8d037e56"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/94/db/fd0326e331726f07ff7f40675cd86aa804bfd2e5016c727fa761c934990e/xmltodict-0.13.0-py2.py3-none-any.whl", hash = "sha256:aa89e8fd76320154a40d19a0df04a4695fb9dc5ba977cbb68ab3e4eb225e7852"},
 ]
 "yarl 1.9.2" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/0e/b1/a65fcf0363ae8c08c0e586772a34cc15b4200bae163eed24258cc95cda90/yarl-1.9.2-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:566185e8ebc0898b11f8026447eacd02e46226716229cea8db37496c8cdd26e0"},

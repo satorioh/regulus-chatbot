@@ -5,6 +5,7 @@ from langchain.tools import Tool
 from langchain import LLMChain, LLMMathChain, PromptTemplate
 from langchain.chains import ConversationChain
 from langchain.utilities import GoogleSearchAPIWrapper, SerpAPIWrapper
+from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
@@ -36,6 +37,8 @@ def init_chatbot():
                                     "hl": "zh-cn", })
     llm_math_chain = LLMMathChain(llm=llm)
 
+    wolfram = WolframAlphaAPIWrapper()
+
     tools = [
         Tool(
             name="Google Search",
@@ -44,7 +47,7 @@ def init_chatbot():
         ),
         Tool(
             name="Calculator",
-            func=llm_math_chain.run,
+            func=wolfram.run,
             description="useful for when you need to answer questions about math. But when the human asked if you can do arithmeti, you just answer 'YES', and do not use this tool",
             return_direct=True,
         )
