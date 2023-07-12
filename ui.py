@@ -12,13 +12,10 @@ st.set_page_config(
                 '''}
 )
 
-tab1, tab2, tab3 = st.tabs(["聊天", "翻译", "总结"])
+tab1, tab2 = st.tabs(["聊天", "翻译"])
 
 with tab1:
     chatbot_page()
 
 with tab2:
     translation_page()
-
-with tab3:
-    pass

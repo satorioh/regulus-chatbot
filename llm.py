@@ -17,15 +17,14 @@ from config.global_config import (
     TRANSLATION_PROMPT
 )
 
-llm = OpenAI(openai_api_key=OPENAI_API_KEY,
-             openai_api_base=OPENAI_API_BASE,
-             temperature=OPENAI_TEMPERATURE,
-             request_timeout=OPENAI_REQUEST_TIMEOUT,
-             model_name=MODEL_NAME)
-
 
 def init_chatbot():
     print("init llm")
+    llm = OpenAI(openai_api_key=OPENAI_API_KEY,
+                 openai_api_base=OPENAI_API_BASE,
+                 temperature=OPENAI_TEMPERATURE,
+                 request_timeout=OPENAI_REQUEST_TIMEOUT,
+                 model_name=MODEL_NAME)
 
     memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
 
@@ -72,11 +71,16 @@ def init_chatbot():
     agent_chain = AgentExecutor.from_agent_and_tools(
         agent=agent, tools=tools, verbose=True, memory=memory,
         max_iterations=6,
-        handle_parsing_errors="Check your output and make sure it conforms!"
+        handle_parsing_errors="Answer question in Chinese, check your output and make sure it conforms!"
     )
     return conversation, agent_chain, memory
 
 
 def init_translator():
+    llm = OpenAI(openai_api_key=OPENAI_API_KEY,
+                 openai_api_base=OPENAI_API_BASE,
+                 temperature=0,
+                 request_timeout=OPENAI_REQUEST_TIMEOUT,
+                 model_name=MODEL_NAME)
     prompt = PromptTemplate(input_variables=["text", "languages"], template=TRANSLATION_PROMPT)
     return LLMChain(llm=llm, prompt=prompt)
