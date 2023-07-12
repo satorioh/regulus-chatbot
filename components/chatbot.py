@@ -8,6 +8,7 @@ from config.global_config import (
     USER_EMOJI,
     BOT_EMOJI,
     ERROR_RESPONSE,
+    DISCLAIMER
 )
 
 
@@ -15,9 +16,7 @@ def chatbot_page():
     print("run chatbot...")
     st.title(f"Regulus Chatbot {BOT_EMOJI}")
     history_dom = st.empty()
-    question_dom = st.markdown(
-        ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
-    )
+    question_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
     st.write("")
 

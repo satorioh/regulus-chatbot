@@ -78,5 +78,5 @@ def init_chatbot():
 
 
 def init_translator():
-    prompt = PromptTemplate(input_variables=["input", "languages"], template=TRANSLATION_PROMPT)
+    prompt = PromptTemplate(input_variables=["text", "languages"], template=TRANSLATION_PROMPT)
     return LLMChain(llm=llm, prompt=prompt)

@@ -22,13 +22,14 @@ Human: {input}
 AI:"""
 
 TRANSLATION_PROMPT = """
-Translate the following text to {languages}: \
-```{input}``` \
-
-show result using table with two columns(first column is 'language', second column is 'translation')
+Your task is to perform the following actions: 
+(1) Tell me the language of the following text delimited by triple backticks, answer using at most 2 words
+(2) Translate the following text delimited by triple backticks to {languages}, show result using table with two columns(first column is 'language', second column is 'translation')
+```{text}```
 """
 
 ERROR_RESPONSE = "我被你问崩溃了，呜呜呜"
+DISCLAIMER = ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
 MAX_CONTEXT = 1000
 USER_EMOJI = "🤠"
 BOT_EMOJI = "🤖"

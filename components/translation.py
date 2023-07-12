@@ -1,8 +1,11 @@
+import re
+
 import streamlit as st
 from llm import init_translator
 from config.global_config import (
     MAX_CONTEXT,
     ERROR_RESPONSE,
+    DISCLAIMER,
     TRANSLATION_EMOJI,
     WARNING_EMOJI,
     SUPPORTED_TRANSLATE_LANGUAGES
@@ -20,7 +23,7 @@ translator = get_translator()
 def generate_answer(input, options):
     try:
         languages = " and ".join(options)
-        answer = translator.run({"input": input, "languages": languages})
+        answer = translator.run({"text": input, "languages": languages})
         return answer
     except Exception as e:
         print(e)
@@ -38,15 +41,20 @@ def translation(input, options):
 def translation_page():
     print("run translation...")
     st.title(f"Regulus Translator {TRANSLATION_EMOJI}")
-    question_dom = st.markdown(
-        ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
-    )
+    hint_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
     st.write("")
 
     def clear_text():
         answer_dom.empty()
         st.session_state["text"] = ""
+        hint_dom.markdown(DISCLAIMER)
+
+    def answer_extract(answer):
+        pattern = r'\(1\) (\w+\s?\w+)\s\(2\)'
+        language = re.findall(pattern, answer)
+        table = answer.split("(2)")[1]
+        return language, table
 
     with st.form("translation-form", False):
         # create a prompt text for the text generation
@@ -73,7 +81,9 @@ def translation_page():
             else:
                 answer = translation(user_input, options)
                 print(f"翻译：{answer}", flush=True)
-                answer_dom.markdown(f"{answer}")
+                language, table = answer_extract(answer)
+                hint_dom.markdown(f"当前输入语种: **{language[0]}**")
+                answer_dom.markdown(f"{table}")
 
         if btn_clear:
             pass
