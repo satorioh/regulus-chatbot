@@ -35,6 +35,7 @@ EMOJI = {
     "user": "🤠",
     "bot": "🤖",
     "translation": "📚",
+    "doc": "📖",
     "warning": "⚠️"
 }
 DEFAULT_TRANSLATE_LANGUAGE = ["Chinese (Simplified)"]

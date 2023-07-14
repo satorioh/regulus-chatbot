@@ -38,7 +38,7 @@ def translation(input, options):
 
 
 def translation_page():
-    print("run translation...")
+    print("run translation page...")
     st.title(f"Regulus Translator {EMOJI['translation']}")
     hint_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()

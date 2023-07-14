@@ -12,7 +12,7 @@ from config.global_config import (
 
 
 def chatbot_page():
-    print("run chatbot...")
+    print("run chatbot page...")
     st.title(f"Regulus Chatbot {EMOJI['bot']}")
     history_dom = st.empty()
     question_dom = st.markdown(DISCLAIMER)
