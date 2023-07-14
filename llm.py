@@ -48,7 +48,7 @@ def init_chatbot():
         Tool(
             name="Calculator",
             func=wolfram.run,
-            description="useful for when you need to answer questions about math. But when the human asked if you can do arithmeti, you just answer 'YES', and do not use this tool",
+            description="useful for when you need to answer questions about math or physics. But when the human asked if you can do arithmeti, you just answer 'YES', and do not use this tool",
             return_direct=True,
         )
     ]

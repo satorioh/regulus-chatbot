@@ -6,8 +6,7 @@ from config.global_config import (
     MAX_CONTEXT,
     ERROR_RESPONSE,
     DISCLAIMER,
-    TRANSLATION_EMOJI,
-    WARNING_EMOJI,
+    EMOJI,
     SUPPORTED_TRANSLATE_LANGUAGES
 )
 
@@ -40,7 +39,7 @@ def translation(input, options):
 
 def translation_page():
     print("run translation...")
-    st.title(f"Regulus Translator {TRANSLATION_EMOJI}")
+    st.title(f"Regulus Translator {EMOJI['translation']}")
     hint_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
     st.write("")
@@ -77,7 +76,7 @@ def translation_page():
 
         if btn_send and user_input != "":
             if len(options) == 0:
-                st.warning('请选择目标语种', icon=WARNING_EMOJI)
+                st.warning('请选择目标语种', icon=EMOJI['warning'])
             else:
                 answer = translation(user_input, options)
                 print(f"翻译：{answer}", flush=True)

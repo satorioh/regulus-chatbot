@@ -5,8 +5,7 @@ from utils import (
 )
 from config.global_config import (
     MAX_CONTEXT,
-    USER_EMOJI,
-    BOT_EMOJI,
+    EMOJI,
     ERROR_RESPONSE,
     DISCLAIMER
 )
@@ -14,7 +13,7 @@ from config.global_config import (
 
 def chatbot_page():
     print("run chatbot...")
-    st.title(f"Regulus Chatbot {BOT_EMOJI}")
+    st.title(f"Regulus Chatbot {EMOJI['bot']}")
     history_dom = st.empty()
     question_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
@@ -66,7 +65,7 @@ def chatbot_page():
             text = ""
             for index, item in enumerate(history):
                 if index % 2 == 0:
-                    text += f"{USER_EMOJI}：{item.content}\n\n{BOT_EMOJI}：{history[index + 1].content}\n\n---\n"
+                    text += f"{EMOJI['user']}：{item.content}\n\n{EMOJI['bot']}：{history[index + 1].content}\n\n---\n"
                     history_dom.markdown(text)
 
     def predict(input):
@@ -92,10 +91,10 @@ def chatbot_page():
         if btn_send and user_input != "":
             display_history()
             question_dom.markdown(
-                f"{USER_EMOJI}：{user_input}\n\n")
+                f"{EMOJI['user']}：{user_input}\n\n")
             answer = predict(user_input)
             print(f"回答：{answer}", flush=True)
-            answer_dom.markdown(f"{BOT_EMOJI}：{answer}")
+            answer_dom.markdown(f"{EMOJI['bot']}：{answer}")
 
             if btn_clear:
                 history_dom.empty()

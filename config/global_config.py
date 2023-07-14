@@ -31,10 +31,12 @@ Your task is to perform the following actions:
 ERROR_RESPONSE = "我被你问崩溃了，呜呜呜"
 DISCLAIMER = ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
 MAX_CONTEXT = 1000
-USER_EMOJI = "🤠"
-BOT_EMOJI = "🤖"
-TRANSLATION_EMOJI = "📚"
-WARNING_EMOJI = "⚠️"
+EMOJI = {
+    "user": "🤠",
+    "bot": "🤖",
+    "translation": "📚",
+    "warning": "⚠️"
+}
 DEFAULT_TRANSLATE_LANGUAGE = ["Chinese (Simplified)"]
 SUPPORTED_TRANSLATE_LANGUAGES = [
     "Afrikaans",
