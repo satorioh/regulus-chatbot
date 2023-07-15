@@ -1,11 +1,14 @@
+import pinecone
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Milvus
+from langchain.vectorstores import Pinecone
 from config.global_config import (
-    ZILLIZ_CLOUD_URI,
-    ZILLIZ_CLOUD_USERNAME,
-    ZILLIZ_CLOUD_PASSWORD
+    OPENAI_API_KEY,
+    OPENAI_API_BASE,
+    PINECONE_API_KEY,
+    PINECONE_ENV,
+    PINECONE_INDEX_NAME
 )
 
 
@@ -18,14 +21,13 @@ def save_embeddings(fold_path):
     print("start split docs...")
     split_docs = text_splitter.split_documents(docs)
     print("split docs finished")
-    embeddings = OpenAIEmbeddings()
-    vector_db = Milvus.from_documents(
-        split_docs,
-        embeddings,
-        connection_args={
-            "uri": ZILLIZ_CLOUD_URI,
-            "user": ZILLIZ_CLOUD_USERNAME,
-            "password": ZILLIZ_CLOUD_PASSWORD,
-            "secure": False,
-        },
+    embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY,
+                                  openai_api_base=OPENAI_API_BASE)
+
+    # initialize pinecone
+    pinecone.init(
+        api_key=PINECONE_API_KEY,  # find at app.pinecone.io
+        environment=PINECONE_ENV,  # next to api key in console
     )
+    index_name = PINECONE_INDEX_NAME
+    vector_db = Pinecone.from_documents(split_docs, embeddings, index_name=index_name)

@@ -16,7 +16,8 @@ dependencies = [
     "wolframalpha>=5.0.0",
     "unstructured>=0.8.1",
     "setuptools>=68.0.0",
-    "pymilvus>=2.2.13",
+    "pinecone-client>=2.2.2",
+    "tiktoken>=0.4.0",
 ]
 requires-python = ">=3.10"
 license = {text = "MIT"}
