@@ -6,10 +6,9 @@ MODEL_NAME = "gpt-3.5-turbo"
 OPENAI_TEMPERATURE = 0.9
 OPENAI_REQUEST_TIMEOUT = 240
 
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-PINECONE_ENV = os.getenv("PINECONE_ENV")
-PINECONE_INDEX_NAME = "regulus-laws"
-
+ZILLIZ_CLOUD_URI = os.getenv("ZILLIZ_CLOUD_URI")
+ZILLIZ_CLOUD_API_KEY = os.getenv("ZILLIZ_CLOUD_API_KEY")
+ZILLIZ_CLOUD_COLLECTION_NAME = "laws"
 
 AGENT_PREFIX = """Have a conversation with a human, answering the following questions as best you can. You have access to the following tools:"""
 AGENT_SUFFIX = """Begin!"
