@@ -3,7 +3,9 @@ from langchain.memory import ConversationBufferWindowMemory
 from langchain.llms import OpenAI
 from langchain.tools import Tool
 from langchain import LLMChain, LLMMathChain, PromptTemplate
-from langchain.chains import ConversationChain
+from langchain.chains import ConversationChain, ConversationalRetrievalChain, RetrievalQA
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain.utilities import GoogleSearchAPIWrapper, SerpAPIWrapper
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from config.global_config import (
@@ -15,12 +17,13 @@ from config.global_config import (
     AGENT_PREFIX,
     AGENT_SUFFIX,
     DEFAULT_TEMPLATE,
-    TRANSLATION_PROMPT
+    TRANSLATION_PROMPT,
+    LAW_PROMPT_TEMPLATE
 )
 
 
 def init_chatbot():
-    print("init llm")
+    print("init chatbot")
     llm = OpenAI(openai_api_key=OPENAI_API_KEY,
                  openai_api_base=OPENAI_API_BASE,
                  temperature=OPENAI_TEMPERATURE,
@@ -87,3 +90,41 @@ def init_translator():
                  model_name=MODEL_NAME)
     prompt = PromptTemplate(input_variables=["text", "languages"], template=TRANSLATION_PROMPT)
     return LLMChain(llm=llm, prompt=prompt)
+
+
+def init_law(vectordb):
+    print("init law")
+    llm = OpenAI(openai_api_key=OPENAI_API_KEY,
+                 openai_api_base=OPENAI_API_BASE,
+                 temperature=0,
+                 request_timeout=OPENAI_REQUEST_TIMEOUT,
+                 model_name=MODEL_NAME)
+
+    # memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
+
+    prompt = PromptTemplate(
+        template=LAW_PROMPT_TEMPLATE,
+        input_variables=["context", "question"]
+    )
+
+    compressor = LLMChainExtractor.from_llm(llm=llm)
+    compression_retriever = ContextualCompressionRetriever(
+        verbose=True,
+        base_compressor=compressor,
+        base_retriever=vectordb.as_retriever(search_type="mmr", search_kwargs={"k": 3})
+    )
+
+    # law = ConversationalRetrievalChain.from_llm(
+    #     llm,
+    #     retriever=compression_retriever,
+    #     memory=memory,
+    #     combine_docs_chain_kwargs={"prompt": prompt},
+    #     verbose=True
+    # )
+    law = RetrievalQA.from_llm(
+        llm,
+        retriever=compression_retriever,
+        prompt=prompt,
+        verbose=True
+    )
+    return law

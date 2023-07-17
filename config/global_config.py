@@ -32,6 +32,14 @@ Your task is to perform the following actions:
 ```{text}```
 """
 
+LAW_PROMPT_TEMPLATE = """你是一个专业的法律顾问，以下是一些提供给你的已知内容，请你简洁和专业的来回答用户的问题，答案请使用中文。
+
+已知内容:
+{context}
+
+参考以上内容请回答如下问题:
+{question}"""
+
 ERROR_RESPONSE = "我被你问崩溃了，呜呜呜"
 DISCLAIMER = ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
 MAX_CONTEXT = 1000

@@ -96,6 +96,6 @@ def chatbot_page():
             print(f"回答：{answer}", flush=True)
             answer_dom.markdown(f"{EMOJI['bot']}：{answer}")
 
-            if btn_clear:
-                history_dom.empty()
-                clear_history()
+        if btn_clear:
+            history_dom.empty()
+            clear_history()
