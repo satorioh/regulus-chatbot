@@ -7,14 +7,14 @@ from config.global_config import (
     ERROR_RESPONSE,
     DISCLAIMER
 )
-from embeddings import init_embeddings
+from embeddings import get_embeddings
 
 source_folder = get_abs_path('laws')
 
 
 def laws_page():
     print("run laws page...")
-    st.title(f"Regulus Law {EMOJI['law']}")
+    st.title(f"Regulus Law Helper {EMOJI['law']}")
     history_dom = st.empty()
     question_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
@@ -22,7 +22,7 @@ def laws_page():
 
     @st.cache_resource
     def get_vector_store():
-        return init_embeddings(source_folder)
+        return get_embeddings()
 
     vector_store = get_vector_store()
 
