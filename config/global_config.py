@@ -7,7 +7,8 @@ OPENAI_TEMPERATURE = 0.9
 OPENAI_REQUEST_TIMEOUT = 240
 
 ZILLIZ_CLOUD_URI = os.getenv("ZILLIZ_CLOUD_URI")
-ZILLIZ_CLOUD_API_KEY = os.getenv("ZILLIZ_CLOUD_API_KEY")
+ZILLIZ_CLOUD_USERNAME = os.getenv("ZILLIZ_CLOUD_USERNAME")
+ZILLIZ_CLOUD_PASSWORD = os.getenv("ZILLIZ_CLOUD_PASSWORD")
 ZILLIZ_CLOUD_COLLECTION_NAME = "laws"
 
 AGENT_PREFIX = """Have a conversation with a human, answering the following questions as best you can. You have access to the following tools:"""

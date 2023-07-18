@@ -12,7 +12,8 @@ from config.global_config import (
     OPENAI_API_KEY,
     OPENAI_API_BASE,
     ZILLIZ_CLOUD_URI,
-    ZILLIZ_CLOUD_API_KEY,
+    ZILLIZ_CLOUD_USERNAME,
+    ZILLIZ_CLOUD_PASSWORD,
     ZILLIZ_CLOUD_COLLECTION_NAME
 )
 
@@ -36,7 +37,8 @@ def add_embeddings(fold_path):
         collection_name=ZILLIZ_CLOUD_COLLECTION_NAME,
         connection_args={
             "uri": ZILLIZ_CLOUD_URI,
-            "token": ZILLIZ_CLOUD_API_KEY,
+            "user": ZILLIZ_CLOUD_USERNAME,
+            "password": ZILLIZ_CLOUD_PASSWORD,
             "secure": True,
         },
     )
