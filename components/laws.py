@@ -1,5 +1,4 @@
 import streamlit as st
-from utils import get_abs_path
 from llm import init_law
 from config.global_config import (
     MAX_CONTEXT,
@@ -8,8 +7,6 @@ from config.global_config import (
     DISCLAIMER
 )
 from embeddings import get_embeddings
-
-source_folder = get_abs_path('laws')
 
 
 def laws_page():

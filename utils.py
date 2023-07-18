@@ -15,3 +15,7 @@ def get_abs_path(path: str) -> str:
     current_path = os.path.abspath(__file__)
     dir_name, file_name = os.path.split(current_path)
     return os.path.join(dir_name, path)
+
+
+def convert_to_2d(data, step=10):
+    return [data[i:i + step] for i in range(0, len(data), step)]

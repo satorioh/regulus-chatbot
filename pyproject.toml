@@ -24,3 +24,4 @@ license = {text = "MIT"}
 
 [tool.pdm.scripts]
 start = "doppler run -- python start.py"
+zilliz = "doppler run -- python zilliz.py"
