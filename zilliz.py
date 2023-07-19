@@ -1,5 +1,5 @@
 import os
-
+from pymilvus import Collection, connections
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -55,4 +55,15 @@ def add_embeddings(fold_path):
             print(','.join(set(source_name)))
 
 
+def get_collection_detail():
+    connections.connect(
+        uri=ZILLIZ_CLOUD_URI,
+        user=ZILLIZ_CLOUD_USERNAME,
+        password=ZILLIZ_CLOUD_PASSWORD,
+        port='19530'
+    )
+    return Collection(ZILLIZ_CLOUD_COLLECTION_NAME)
+
+
+# print(get_collection_detail())
 add_embeddings(source_folder)
