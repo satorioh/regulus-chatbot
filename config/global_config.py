@@ -3,6 +3,7 @@ import os
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_API_BASE = os.getenv("BASE_URL")
 MODEL_NAME = "gpt-3.5-turbo"
+SUMMARIZATION_MODEL_NAME = "text-davinci-003"
 OPENAI_TEMPERATURE = 0.9
 OPENAI_REQUEST_TIMEOUT = 240
 
@@ -50,6 +51,7 @@ EMOJI = {
     "translation": "📚",
     "doc": "📖",
     "law": "⚖️",
+    "youtube": "",
     "warning": "⚠️"
 }
 DEFAULT_TRANSLATE_LANGUAGE = ["Chinese (Simplified)"]

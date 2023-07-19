@@ -2,6 +2,7 @@ import streamlit as st
 from components.chatbot import chatbot_page
 from components.translation import translation_page
 from components.laws import laws_page
+from components.youtube import youtube_page
 
 st.set_page_config(
     page_title="Regulus Chatbot",
@@ -13,7 +14,7 @@ st.set_page_config(
                 '''}
 )
 
-tab1, tab2, tab3 = st.tabs(["聊天", "翻译", "法律助手"])
+tab1, tab2, tab3, tab4 = st.tabs(["聊天", "翻译", "法律助手", "油管总结"])
 
 with tab1:
     chatbot_page()
@@ -23,3 +24,6 @@ with tab2:
 
 with tab3:
     laws_page()
+
+with tab4:
+    youtube_page()

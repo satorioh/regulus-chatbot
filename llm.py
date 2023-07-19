@@ -4,6 +4,8 @@ from langchain.llms import OpenAI
 from langchain.tools import Tool
 from langchain import LLMChain, LLMMathChain, PromptTemplate
 from langchain.chains import ConversationChain, ConversationalRetrievalChain, RetrievalQA
+from langchain.chains.summarize import load_summarize_chain
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain.utilities import GoogleSearchAPIWrapper, SerpAPIWrapper
@@ -14,6 +16,7 @@ from config.global_config import (
     OPENAI_REQUEST_TIMEOUT,
     OPENAI_TEMPERATURE,
     MODEL_NAME,
+    SUMMARIZATION_MODEL_NAME,
     AGENT_PREFIX,
     AGENT_SUFFIX,
     DEFAULT_TEMPLATE,
@@ -127,3 +130,32 @@ def init_law(vectordb):
         verbose=True
     )
     return law
+
+
+summary_llm = OpenAI(openai_api_key=OPENAI_API_KEY,
+                     openai_api_base=OPENAI_API_BASE,
+                     temperature=0,
+                     request_timeout=OPENAI_REQUEST_TIMEOUT,
+                     model_name=SUMMARIZATION_MODEL_NAME)
+
+# 初始化文本分割器
+summary_text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=0
+)
+
+
+def get_youtube_summary(docs):
+    prompt_template = """Write a concise summary of the following:
+
+
+    {text}
+
+
+    CONCISE SUMMARY IN CHINESE:"""
+    reduce_prompt = PromptTemplate(template=prompt_template, input_variables=["text"])
+    split_documents = summary_text_splitter.split_documents(docs)
+    print(f'documents:{len(split_documents)}')
+    chain = load_summarize_chain(summary_llm, chain_type="map_reduce", verbose=True, map_prompt=reduce_prompt,
+                                 combine_prompt=reduce_prompt)
+    return chain.run(split_documents)
