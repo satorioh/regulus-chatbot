@@ -109,9 +109,8 @@ def init_law(vectordb):
 
     compressor = LLMChainExtractor.from_llm(llm=llm)
     compression_retriever = ContextualCompressionRetriever(
-        verbose=True,
         base_compressor=compressor,
-        base_retriever=vectordb.as_retriever(search_type="mmr", search_kwargs={"k": 3})
+        base_retriever=vectordb.as_retriever(search_kwargs={"k": 3})
     )
 
     # law = ConversationalRetrievalChain.from_llm(
