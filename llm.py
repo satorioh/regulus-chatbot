@@ -1,6 +1,7 @@
 from langchain.agents import load_tools, ZeroShotAgent, AgentExecutor
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.tools import Tool
 from langchain import LLMChain, LLMMathChain, PromptTemplate
 from langchain.chains import ConversationChain, ConversationalRetrievalChain, RetrievalQA
@@ -132,16 +133,16 @@ def init_law(vectordb):
     return law
 
 
-summary_llm = OpenAI(openai_api_key=OPENAI_API_KEY,
-                     openai_api_base=OPENAI_API_BASE,
-                     temperature=0,
-                     request_timeout=OPENAI_REQUEST_TIMEOUT,
-                     model_name=SUMMARIZATION_MODEL_NAME)
+summary_llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY,
+                         openai_api_base=OPENAI_API_BASE,
+                         temperature=0,
+                         request_timeout=OPENAI_REQUEST_TIMEOUT,
+                         model_name=SUMMARIZATION_MODEL_NAME)
 
 # 初始化文本分割器
 summary_text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
-    chunk_overlap=100
+    chunk_overlap=0
 )
 
 
@@ -153,9 +154,24 @@ def get_youtube_summary(docs):
 
 
     CONCISE SUMMARY IN CHINESE:"""
-    reduce_prompt = PromptTemplate(template=prompt_template, input_variables=["text"])
+    PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
+    refine_template = (
+        "Your job is to produce a final summary\n"
+        "We have provided an existing summary up to a certain point: {existing_answer}\n"
+        "We have the opportunity to refine the existing summary"
+        "(only if needed) with some more context below.\n"
+        "------------\n"
+        "{text}\n"
+        "------------\n"
+        "Given the new context, refine the original summary in Chinese."
+        "If the context isn't useful, return the original summary."
+    )
+    refine_prompt = PromptTemplate(
+        input_variables=["existing_answer", "text"],
+        template=refine_template,
+    )
     split_documents = summary_text_splitter.split_documents(docs)
-    print(f'documents:{len(split_documents)}')
-    chain = load_summarize_chain(summary_llm, chain_type="map_reduce", verbose=True, map_prompt=reduce_prompt,
-                                 combine_prompt=reduce_prompt)
+    print(f'split_documents:{len(split_documents)}')
+    chain = load_summarize_chain(summary_llm, chain_type="refine", verbose=True, question_prompt=PROMPT,
+                                 refine_prompt=refine_prompt)
     return chain.run(split_documents)

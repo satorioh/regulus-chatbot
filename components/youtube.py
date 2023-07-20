@@ -34,12 +34,12 @@ def youtube_page():
             '标题': metadata['title'],
             '描述': metadata['description'],
             '浏览量': metadata['view_count'],
-            '缩略图': metadata['thumbnail_url'],
             '发布日期': metadata['publish_date'],
             '时长': format_time(time),
             '作者': metadata['author']
         }
         st.table(table)
+        st.image(metadata['thumbnail_url'], caption="缩略图")
         if time > SUMMARIZATION_MAX_SECONDS:
             st.warning(SUMMARIZATION_TIME_LIMIT_HINT, icon=EMOJI['warning'])
             return None
@@ -56,8 +56,10 @@ def youtube_page():
         st.session_state["url-text"] = ""
         summary_dom.empty()
 
-    with st.form("youtube-form", True):
-        url = st.text_input('请输入 Youtube 链接：', placeholder=SUMMARIZATION_TIME_LIMIT_HINT, key='url-text')
+    with st.form("youtube-form", False):
+        user_input = st.text_input('请输入 Youtube 链接：(e.g. https://www.youtube.com/watch?v=QsYGlZkevEg)',
+                                   placeholder=SUMMARIZATION_TIME_LIMIT_HINT, key='url-text')
+        url = user_input.strip()
         col1, col2 = st.columns([1, 1])
         with col1:
             btn_send = st.form_submit_button(
@@ -71,10 +73,10 @@ def youtube_page():
                     docs = load_metadata(url)
             except Exception as e:
                 print(f"视频提取失败:{e}")
-                hint_dom.markdown("视频提取失败")
+                hint_dom.markdown("**视频提取失败**")
             try:
-                with st.spinner('AI 总结中...'):
+                with st.spinner('AI 总结中，时间可能较长，请耐心等待...'):
                     return load_summary(docs)
             except Exception as e:
                 print(f"生成总结失败:{e}")
-                hint_dom.markdown("生成总结失败")
+                hint_dom.markdown("**生成总结失败**")
