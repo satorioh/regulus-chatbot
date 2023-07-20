@@ -141,7 +141,7 @@ summary_llm = OpenAI(openai_api_key=OPENAI_API_KEY,
 # 初始化文本分割器
 summary_text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
-    chunk_overlap=0
+    chunk_overlap=100
 )
 
 

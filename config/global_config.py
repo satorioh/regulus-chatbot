@@ -4,6 +4,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_API_BASE = os.getenv("BASE_URL")
 MODEL_NAME = "gpt-3.5-turbo"
 SUMMARIZATION_MODEL_NAME = "text-davinci-003"
+SUMMARIZATION_MAX_SECONDS = 600
 OPENAI_TEMPERATURE = 0.9
 OPENAI_REQUEST_TIMEOUT = 240
 
@@ -44,6 +45,7 @@ LAW_PROMPT_TEMPLATE = """你是一个专业的法律顾问，以下是一些提�
 
 ERROR_RESPONSE = "我被你问崩溃了，呜呜呜"
 DISCLAIMER = ">  回答由 AI 生成，不保证准确率，仅供参考学习！"
+SUMMARIZATION_TIME_LIMIT_HINT = "此为演示站点，视频时长请不要超过10分钟"
 MAX_CONTEXT = 1000
 EMOJI = {
     "user": "🤠",

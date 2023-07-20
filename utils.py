@@ -19,3 +19,8 @@ def get_abs_path(path: str) -> str:
 
 def convert_to_2d(data, step=10):
     return [data[i:i + step] for i in range(0, len(data), step)]
+
+
+def format_time(seconds):
+    minutes, seconds = divmod(seconds, 60)
+    return f"{minutes}分{seconds}秒"
