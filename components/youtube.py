@@ -15,7 +15,6 @@ def youtube_page():
     print("run youtube page...")
     st.title(f"Regulus Youtube Summary")
     hint_dom = st.markdown(DISCLAIMER)
-    summary_dom = st.empty()
     st.write("")
 
     def load_metadata(video_url):
@@ -26,6 +25,8 @@ def youtube_page():
                                                           "th"],
                                                 translation="en")
         docs = loader.load()
+        if len(docs) == 0:
+            raise Exception("请确保当前视频包含字幕")
         print(docs)
         metadata = docs[0].metadata
         time = metadata['length']
@@ -50,11 +51,10 @@ def youtube_page():
         if docs:
             summary = get_youtube_summary(docs)
             print(f"总结：{summary}")
-            summary_dom.markdown(summary)
+            st.markdown(summary)
 
     def clear_text():
         st.session_state["url-text"] = ""
-        summary_dom.empty()
 
     with st.form("youtube-form", False):
         user_input = st.text_input('请输入 Youtube 链接：(e.g. https://www.youtube.com/watch?v=QsYGlZkevEg)',
@@ -68,15 +68,17 @@ def youtube_page():
             btn_clear = st.form_submit_button("清除", use_container_width=True, on_click=clear_text)
 
         if btn_send and url != "":
+            docs = None
             try:
                 with st.spinner('视频信息提取中...'):
                     docs = load_metadata(url)
             except Exception as e:
                 print(f"视频提取失败:{e}")
-                hint_dom.markdown("**视频提取失败**")
-            try:
-                with st.spinner('AI 总结中，时间可能较长，请耐心等待...'):
-                    return load_summary(docs)
-            except Exception as e:
-                print(f"生成总结失败:{e}")
-                hint_dom.markdown("**生成总结失败**")
+                hint_dom.markdown(f"**视频提取失败：{e}**")
+            if docs and len(docs) > 0:
+                try:
+                    with st.spinner('AI 总结中，时间可能较长，请耐心等待...'):
+                        return load_summary(docs)
+                except Exception as e:
+                    print(f"生成总结失败:{e}")
+                    hint_dom.markdown("**生成总结失败**")
