@@ -62,8 +62,10 @@ def get_collection_detail():
         password=ZILLIZ_CLOUD_PASSWORD,
         port='19530'
     )
-    return Collection(ZILLIZ_CLOUD_COLLECTION_NAME)
+    collection = Collection(ZILLIZ_CLOUD_COLLECTION_NAME)
+    print(collection)
+    print(collection.num_entities)
 
 
-# print(get_collection_detail())
-add_embeddings(source_folder)
+get_collection_detail()
+# add_embeddings(source_folder)
