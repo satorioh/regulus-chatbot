@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_chat import message
 from llm import init_teacher
 from config.global_config import (
     MAX_CONTEXT,
@@ -43,11 +44,15 @@ def teacher_page():
     def display_history():
         history = get_history()
         if history != None:
-            text = ""
-            for index, item in enumerate(history):
-                if index % 2 == 0:
-                    text += f"{EMOJI['user']}：{item.content}\n\n{EMOJI['bot']}：{history[index + 1].content}\n\n---\n"
-                    history_dom.markdown(text)
+            with history_dom.container():
+                for index, item in enumerate(history):
+                    if index % 2 == 0:
+                        message(item.content, is_user=True, key=f"{index}_user")
+                        message(
+                            history[index + 1].content,
+                            key=f"{index + 1}",
+                            allow_html=True
+                        )
 
     def predict(input):
         try:
@@ -71,11 +76,12 @@ def teacher_page():
 
         if btn_send and user_input != "":
             display_history()
-            question_dom.markdown(
-                f"{EMOJI['user']}：{user_input}\n\n")
+            with question_dom.container():
+                message(user_input, is_user=True)
             answer = predict(user_input)
             print(f"回答：{answer}", flush=True)
-            answer_dom.markdown(f"{EMOJI['bot']}：{answer}")
+            with answer_dom.container():
+                message(answer)
 
         if btn_clear:
             history_dom.empty()
