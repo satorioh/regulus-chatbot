@@ -22,7 +22,8 @@ from config.global_config import (
     AGENT_SUFFIX,
     DEFAULT_TEMPLATE,
     TRANSLATION_PROMPT,
-    LAW_PROMPT_TEMPLATE
+    LAW_PROMPT_TEMPLATE,
+    TEACHER_PROMPT_TEMPLATE
 )
 
 
@@ -175,3 +176,23 @@ def get_youtube_summary(docs):
     chain = load_summarize_chain(summary_llm, chain_type="refine", verbose=True, question_prompt=PROMPT,
                                  refine_prompt=refine_prompt)
     return chain.run(split_documents)
+
+
+def init_teacher():
+    print("init teacher")
+    llm = OpenAI(openai_api_key=OPENAI_API_KEY,
+                 openai_api_base=OPENAI_API_BASE,
+                 temperature=OPENAI_TEMPERATURE,
+                 request_timeout=OPENAI_REQUEST_TIMEOUT,
+                 model_name=MODEL_NAME)
+
+    memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5)
+
+    teacher_prompt = PromptTemplate(input_variables=["input", "chat_history"], template=TEACHER_PROMPT_TEMPLATE)
+    conversation = ConversationChain(
+        llm=llm,
+        memory=memory,
+        prompt=teacher_prompt,
+        verbose=True
+    )
+    return conversation, memory
