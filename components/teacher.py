@@ -47,10 +47,11 @@ def teacher_page():
             with history_dom.container():
                 for index, item in enumerate(history):
                     if index % 2 == 0:
-                        message(item.content, is_user=True, key=f"{index}_user")
+                        message(item.content, is_user=True, key=f"{index}_user", avatar_style="personas")
                         message(
                             history[index + 1].content,
                             key=f"{index + 1}",
+                            avatar_style='micah',
                             allow_html=True
                         )
 
@@ -77,11 +78,11 @@ def teacher_page():
         if btn_send and user_input != "":
             display_history()
             with question_dom.container():
-                message(user_input, is_user=True)
+                message(user_input, is_user=True, avatar_style="personas")
             answer = predict(user_input)
             print(f"回答：{answer}", flush=True)
             with answer_dom.container():
-                message(answer)
+                message(answer, avatar_style='micah')
 
         if btn_clear:
             history_dom.empty()
