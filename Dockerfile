@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     make -j $(nproc) && \
     make install_sw install_ssldirs && \
     ldconfig -v && \
-    export SSL_CERT_DIR=/etc/ssl/certs
+    export SSL_CERT_DIR=/etc/ssl/certs && \
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ARG DOPPLER_TOKEN
 ENV DOPPLER_TOKEN=$DOPPLER_TOKEN
 EXPOSE 8000
