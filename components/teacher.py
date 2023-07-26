@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_chat import message
 from llm import init_teacher
+from speech_synthesis import text_to_speech
 from config.global_config import (
     MAX_CONTEXT,
     EMOJI,
@@ -83,6 +84,7 @@ def teacher_page():
             print(f"回答：{answer}", flush=True)
             with answer_dom.container():
                 message(answer, avatar_style='micah')
+                text_to_speech(answer)
 
         if btn_clear:
             history_dom.empty()

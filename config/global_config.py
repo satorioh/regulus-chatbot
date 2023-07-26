@@ -13,6 +13,9 @@ ZILLIZ_CLOUD_USERNAME = os.getenv("ZILLIZ_CLOUD_USERNAME")
 ZILLIZ_CLOUD_PASSWORD = os.getenv("ZILLIZ_CLOUD_PASSWORD")
 ZILLIZ_CLOUD_COLLECTION_NAME = "laws"
 
+SPEECH_REGION = os.getenv("SPEECH_REGION")
+SPEECH_KEY = os.getenv("SPEECH_KEY")
+
 AGENT_PREFIX = """Have a conversation with a human, answering the following questions as best you can. You have access to the following tools:"""
 AGENT_SUFFIX = """Begin!"
 
