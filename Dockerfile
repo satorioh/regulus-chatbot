@@ -29,5 +29,6 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ARG DOPPLER_TOKEN
 ENV DOPPLER_TOKEN=$DOPPLER_TOKEN
+ENV SSL_CERT_DIR="/etc/ssl/certs"
 EXPOSE 8000
 CMD ["pdm", "run", "start"]
