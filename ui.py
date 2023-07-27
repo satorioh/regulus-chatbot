@@ -30,4 +30,7 @@ with tab4:
     youtube_page()
 
 with tab5:
-    teacher_page()
+    try:
+        teacher_page()
+    except Exception as e:
+        print(e)

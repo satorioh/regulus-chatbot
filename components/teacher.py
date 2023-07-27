@@ -1,6 +1,4 @@
 import base64
-import uuid
-
 import streamlit as st
 from streamlit_chat import message
 from llm import init_teacher
