@@ -24,9 +24,7 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     ./config --prefix=/usr/local && \
     make -j $(nproc) && \
     make install_sw install_ssldirs && \
-    ldconfig -v && \
-    export SSL_CERT_DIR=/etc/ssl/certs && \
-    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    ldconfig -v
 ARG DOPPLER_TOKEN
 ENV DOPPLER_TOKEN=$DOPPLER_TOKEN
 ENV SSL_CERT_DIR="/etc/ssl/certs"
