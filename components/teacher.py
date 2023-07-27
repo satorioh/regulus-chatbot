@@ -70,10 +70,10 @@ def teacher_page():
         except Exception as e:
             print(e)
 
-    def set_audio_control(audio_data, autoplay="false"):
+    def set_audio_control(audio_data, autoplay=False):
         b64 = base64.b64encode(audio_data).decode()
         md = f"""
-                                    <audio controls autoplay={autoplay} style="margin:-20px 0 0 50px;">
+                                    <audio controls {"autoplay" if autoplay else ""} style="margin:-20px 0 0 50px;">
                                     <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
                                     </audio>
                                     """
@@ -102,9 +102,9 @@ def teacher_page():
             answer = predict(user_input)
             print(f"回答：{answer}", flush=True)
             with answer_dom.container():
-                message(answer, avatar_style='micah', key=str(uuid.uuid4()))
+                message(answer, avatar_style='micah')
                 audio_data = text_to_speech(answer)
-                set_audio_control(audio_data, "true")
+                set_audio_control(audio_data, True)
                 st.session_state.audio.append(audio_data)
 
         if btn_clear:
