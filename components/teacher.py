@@ -1,3 +1,6 @@
+import base64
+import uuid
+
 import streamlit as st
 from streamlit_chat import message
 from llm import init_teacher
@@ -27,6 +30,7 @@ def teacher_page():
         teacher, memory = get_llm()
         st.session_state.teacher = teacher
         st.session_state.memory = memory
+        st.session_state.audio = []
 
     def get_history():
         return st.session_state.memory.buffer
@@ -34,6 +38,7 @@ def teacher_page():
     def clear_history():
         print("clear history")
         st.session_state.memory.clear()
+        st.session_state.audio = []
 
     def generate_answer(query):
         try:
@@ -44,10 +49,11 @@ def teacher_page():
 
     def display_history():
         history = get_history()
-        if history != None:
+        if len(history) > 0:
             with history_dom.container():
                 for index, item in enumerate(history):
-                    if index % 2 == 0:
+                    even_index = index % 2
+                    if even_index == 0:
                         message(item.content, is_user=True, key=f"{index}_user", avatar_style="personas")
                         message(
                             history[index + 1].content,
@@ -55,6 +61,7 @@ def teacher_page():
                             avatar_style='micah',
                             allow_html=True
                         )
+                        set_audio_control(st.session_state.audio[int(even_index / 2)])
 
     def predict(input):
         try:
@@ -62,6 +69,18 @@ def teacher_page():
                 return generate_answer(input)
         except Exception as e:
             print(e)
+
+    def set_audio_control(audio_data, autoplay="false"):
+        b64 = base64.b64encode(audio_data).decode()
+        md = f"""
+                                    <audio controls autoplay={autoplay} style="margin:-20px 0 0 50px;">
+                                    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                                    </audio>
+                                    """
+        st.markdown(
+            md,
+            unsafe_allow_html=True,
+        )
 
     with st.form("teacher-form", True):
         # create a prompt text for the text generation
@@ -83,8 +102,10 @@ def teacher_page():
             answer = predict(user_input)
             print(f"回答：{answer}", flush=True)
             with answer_dom.container():
-                message(answer, avatar_style='micah')
-                text_to_speech(answer)
+                message(answer, avatar_style='micah', key=str(uuid.uuid4()))
+                audio_data = text_to_speech(answer)
+                set_audio_control(audio_data, "true")
+                st.session_state.audio.append(audio_data)
 
         if btn_clear:
             history_dom.empty()

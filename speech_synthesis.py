@@ -19,6 +19,9 @@ def text_to_speech(text):
 
     if speech_synthesis_result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
         print("Speech synthesized for text [{}]".format(text))
+        audio_data = speech_synthesis_result.audio_data
+        print("{} bytes of audio data received.".format(len(audio_data)))
+        return audio_data
     elif speech_synthesis_result.reason == speechsdk.ResultReason.Canceled:
         cancellation_details = speech_synthesis_result.cancellation_details
         print("Speech synthesis canceled: {}".format(cancellation_details.reason))
