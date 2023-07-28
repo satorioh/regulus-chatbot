@@ -2,11 +2,17 @@ import base64
 import streamlit as st
 from streamlit_chat import message
 from llm import init_teacher
-from speech_synthesis import text_to_speech
+from speech_synthesis import (
+    text_to_speech,
+    speech_to_text
+)
 from config.global_config import (
     MAX_CONTEXT,
     ERROR_RESPONSE,
     DISCLAIMER
+)
+from utils import (
+    save_audio_as_wav
 )
 from st_custom_components import st_audiorec
 
@@ -109,3 +115,6 @@ def teacher_page():
             history_dom.empty()
             clear_history()
     wav_audio_data = st_audiorec()
+    if wav_audio_data is not None:
+        save_audio_as_wav(wav_audio_data, "tmp.wav", 16000)
+        speech_to_text("tmp.wav")
