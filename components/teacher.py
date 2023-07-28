@@ -5,10 +5,10 @@ from llm import init_teacher
 from speech_synthesis import text_to_speech
 from config.global_config import (
     MAX_CONTEXT,
-    EMOJI,
     ERROR_RESPONSE,
     DISCLAIMER
 )
+from st_custom_components import st_audiorec
 
 
 def teacher_page():
@@ -108,3 +108,4 @@ def teacher_page():
         if btn_clear:
             history_dom.empty()
             clear_history()
+    wav_audio_data = st_audiorec()
