@@ -65,7 +65,9 @@ EMOJI = {
     "doc": "📖",
     "law": "⚖️",
     "youtube": "",
-    "warning": "⚠️"
+    "warning": "⚠️",
+    "microphone": ":studio_microphone:",
+    "keyboard": ":keyboard:"
 }
 DEFAULT_TRANSLATE_LANGUAGE = ["Chinese (Simplified)"]
 SUPPORTED_TRANSLATE_LANGUAGES = [

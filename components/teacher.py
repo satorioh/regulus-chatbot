@@ -9,7 +9,8 @@ from speech_synthesis import (
 from config.global_config import (
     MAX_CONTEXT,
     ERROR_RESPONSE,
-    DISCLAIMER
+    DISCLAIMER,
+    EMOJI
 )
 from utils import (
     save_audio_as_wav
@@ -35,6 +36,8 @@ def teacher_page():
         st.session_state.teacher = teacher
         st.session_state.memory = memory
         st.session_state.audio = []
+        st.session_state.show_form = False
+        st.session_state.toggle_icon = EMOJI["keyboard"]
 
     def get_history():
         return st.session_state.memory.buffer
@@ -86,35 +89,43 @@ def teacher_page():
             unsafe_allow_html=True,
         )
 
-    with st.form("teacher-form", True):
-        # create a prompt text for the text generation
-        user_input = st.text_area(label=":thinking_face: 问点什么？",
-                                  height=100,
-                                  max_chars=MAX_CONTEXT,
-                                  placeholder="支持使用 Markdown 格式书写")
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            btn_send = st.form_submit_button(
-                "发送", use_container_width=True, type="primary")
-        with col2:
-            btn_clear = st.form_submit_button("清除历史记录", use_container_width=True)
+    def toggle_btn_click():
+        st.session_state.show_form = not st.session_state.show_form
+        st.session_state.toggle_icon = EMOJI["microphone"] if st.session_state.show_form else EMOJI["keyboard"]
 
-        if btn_send and user_input != "":
-            display_history()
-            with question_dom.container():
-                message(user_input, is_user=True, avatar_style="personas")
-            answer = predict(user_input)
-            print(f"回答：{answer}", flush=True)
-            with answer_dom.container():
-                message(answer, avatar_style='micah')
-                audio_data = text_to_speech(answer)
-                set_audio_control(audio_data, True)
-                st.session_state.audio.append(audio_data)
+    st.button(st.session_state.toggle_icon, on_click=toggle_btn_click)
 
-        if btn_clear:
-            history_dom.empty()
-            clear_history()
-    wav_audio_data = st_audiorec()
-    if wav_audio_data is not None:
-        save_audio_as_wav(wav_audio_data, "tmp.wav")
-        text = speech_to_text("tmp.wav")
+    if st.session_state.show_form:
+        with st.form("teacher-form", True):
+            # create a prompt text for the text generation
+            user_input = st.text_area(label=":thinking_face: 问点什么？",
+                                      height=100,
+                                      max_chars=MAX_CONTEXT,
+                                      placeholder="支持使用 Markdown 格式书写")
+            col1, col2 = st.columns([1, 1])
+            with col1:
+                btn_send = st.form_submit_button(
+                    "发送", use_container_width=True, type="primary")
+            with col2:
+                btn_clear = st.form_submit_button("清除历史记录", use_container_width=True)
+
+            if btn_send and user_input != "":
+                display_history()
+                with question_dom.container():
+                    message(user_input, is_user=True, avatar_style="personas")
+                answer = predict(user_input)
+                print(f"回答：{answer}", flush=True)
+                with answer_dom.container():
+                    message(answer, avatar_style='micah')
+                    audio_data = text_to_speech(answer)
+                    set_audio_control(audio_data, True)
+                    st.session_state.audio.append(audio_data)
+
+            if btn_clear:
+                history_dom.empty()
+                clear_history()
+    else:
+        wav_audio_data = st_audiorec()
+        if wav_audio_data is not None:
+            save_audio_as_wav(wav_audio_data, "tmp.wav")
+            text = speech_to_text("tmp.wav")
