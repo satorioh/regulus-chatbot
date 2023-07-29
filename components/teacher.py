@@ -68,7 +68,8 @@ def teacher_page():
                             avatar_style='micah',
                             allow_html=True
                         )
-                        set_audio_control(st.session_state.audio[int(even_index / 2)])
+                        if len(st.session_state.audio) > 0: set_audio_control(
+                            st.session_state.audio[int(even_index / 2)])
 
     def predict(input):
         try:
@@ -93,7 +94,20 @@ def teacher_page():
         st.session_state.show_form = not st.session_state.show_form
         st.session_state.toggle_icon = EMOJI["microphone"] if st.session_state.show_form else EMOJI["keyboard"]
 
+    def process(user_input):
+        with question_dom.container():
+            message(user_input, is_user=True, avatar_style="personas")
+        answer = predict(user_input)
+        print(f"回答：{answer}", flush=True)
+        with answer_dom.container():
+            message(answer, avatar_style='micah')
+            audio_data = text_to_speech(answer)
+            set_audio_control(audio_data, True)
+            st.session_state.audio.append(audio_data)
+
     st.button(st.session_state.toggle_icon, on_click=toggle_btn_click)
+
+    display_history()
 
     if st.session_state.show_form:
         with st.form("teacher-form", True):
@@ -110,32 +124,15 @@ def teacher_page():
                 btn_clear = st.form_submit_button("清除历史记录", use_container_width=True)
 
             if btn_send and user_input != "":
-                display_history()
-                with question_dom.container():
-                    message(user_input, is_user=True, avatar_style="personas")
-                answer = predict(user_input)
-                print(f"回答：{answer}", flush=True)
-                with answer_dom.container():
-                    message(answer, avatar_style='micah')
-                    audio_data = text_to_speech(answer)
-                    set_audio_control(audio_data, True)
-                    st.session_state.audio.append(audio_data)
+                process(user_input)
 
             if btn_clear:
                 history_dom.empty()
                 clear_history()
     else:
-        display_history()
         wav_audio_data = st_audiorec()
         if wav_audio_data is not None:
             save_audio_as_wav(wav_audio_data, "tmp.wav")
-            user_input = speech_to_text("tmp.wav")
-            with question_dom.container():
-                message(user_input, is_user=True, avatar_style="personas")
-            answer = predict(user_input)
-            print(f"回答：{answer}", flush=True)
-            with answer_dom.container():
-                message(answer, avatar_style='micah')
-                audio_data = text_to_speech(answer)
-                set_audio_control(audio_data, True)
-                st.session_state.audio.append(audio_data)
+            with st.spinner('AI 聆听中...'):
+                user_input = speech_to_text("tmp.wav")
+            process(user_input)
