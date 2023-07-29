@@ -125,7 +125,17 @@ def teacher_page():
                 history_dom.empty()
                 clear_history()
     else:
+        display_history()
         wav_audio_data = st_audiorec()
         if wav_audio_data is not None:
             save_audio_as_wav(wav_audio_data, "tmp.wav")
-            text = speech_to_text("tmp.wav")
+            user_input = speech_to_text("tmp.wav")
+            with question_dom.container():
+                message(user_input, is_user=True, avatar_style="personas")
+            answer = predict(user_input)
+            print(f"回答：{answer}", flush=True)
+            with answer_dom.container():
+                message(answer, avatar_style='micah')
+                audio_data = text_to_speech(answer)
+                set_audio_control(audio_data, True)
+                st.session_state.audio.append(audio_data)
