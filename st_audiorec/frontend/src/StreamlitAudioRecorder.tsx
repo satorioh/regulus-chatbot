@@ -41,20 +41,20 @@ class StAudioRec extends StreamlitComponentBase<State> {
 
     return (
       <span>
-        <div>
+        <div style={{ textAlign: 'center' }}>
           <button id='record' onClick={this.onClick_start}>
             Start Recording
           </button>
           <button id='stop' onClick={this.onClick_stop}>
             Stop
           </button>
-          <button id='reset' onClick={this.onClick_reset}>
-            Reset
-          </button>
+          {/*<button id='reset' onClick={this.onClick_reset}>*/}
+          {/*  Reset*/}
+          {/*</button>*/}
 
-          <button id='continue' onClick={this.onClick_continue}>
-            Download
-          </button>
+          {/*<button id='continue' onClick={this.onClick_continue}>*/}
+          {/*  Download*/}
+          {/*</button>*/}
 
           <AudioReactRecorder
             state={recordState}
@@ -66,11 +66,11 @@ class StAudioRec extends StreamlitComponentBase<State> {
             canvasHeight={100}
           />
 
-          <audio
-            id='audio'
-            controls
-            src={this.state.audioDataURL}
-          />
+          {/*<audio*/}
+          {/*  id='audio'*/}
+          {/*  controls*/}
+          {/*  src={this.state.audioDataURL}*/}
+          {/*/>*/}
 
         </div>
       </span>

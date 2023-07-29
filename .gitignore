@@ -161,3 +161,4 @@ cython_debug/
 .pdm-python
 laws
 tmp.wav
+st_audiorec/frontend/node_modules
