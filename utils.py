@@ -31,7 +31,7 @@ def format_time(seconds):
 def save_audio_as_wav(array_buffer, filename, sample_rate=44100):
     audio_data = np.frombuffer(array_buffer, dtype=np.int16)
     with wave.open(filename, 'wb') as wav_file:
-        wav_file.setnchannels(1)  # 单声道
+        wav_file.setnchannels(2)  # 双声道
         wav_file.setsampwidth(2)  # 16位
         wav_file.setframerate(sample_rate)
         wav_file.writeframes(audio_data.tobytes())

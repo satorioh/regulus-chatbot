@@ -116,5 +116,5 @@ def teacher_page():
             clear_history()
     wav_audio_data = st_audiorec()
     if wav_audio_data is not None:
-        save_audio_as_wav(wav_audio_data, "tmp.wav", 16000)
-        speech_to_text("tmp.wav")
+        save_audio_as_wav(wav_audio_data, "tmp.wav")
+        text = speech_to_text("tmp.wav")
