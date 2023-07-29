@@ -101,11 +101,12 @@ def teacher_page():
         print(f"回答：{answer}", flush=True)
         with answer_dom.container():
             message(answer, avatar_style='micah')
-            audio_data = text_to_speech(answer)
+            with st.spinner("AI 语音合成中..."):
+                audio_data = text_to_speech(answer)
             set_audio_control(audio_data, True)
             st.session_state.audio.append(audio_data)
 
-    st.button(st.session_state.toggle_icon, on_click=toggle_btn_click)
+    # st.button(st.session_state.toggle_icon, on_click=toggle_btn_click)
 
     display_history()
 
