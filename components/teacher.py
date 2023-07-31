@@ -22,7 +22,7 @@ def teacher_page():
     print("run teacher page...")
     st.title(f"Regulus English Teacher")
     history_dom = st.empty()
-    question_dom = st.markdown(DISCLAIMER)
+    question_dom = st.empty()
     answer_dom = st.empty()
     st.write("")
 
@@ -81,7 +81,7 @@ def teacher_page():
     def set_audio_control(audio_data, autoplay=False):
         b64 = base64.b64encode(audio_data).decode()
         md = f"""
-                                    <audio controls {"autoplay" if autoplay else ""} style="margin:-20px 0 0 50px;">
+                                    <audio controls {"autoplay" if autoplay else ""} style="margin:-20px 0 0 0px;">
                                     <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
                                     </audio>
                                     """
