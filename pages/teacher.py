@@ -102,7 +102,7 @@ def teacher_page():
         print(f"回答：{answer}", flush=True)
         with answer_dom.container():
             message(answer, avatar_style='micah', seed="Cali")
-            with st.spinner("AI 语音合成中..."):
+            with st.spinner("AI 思索中..."):
                 audio_data = text_to_speech(answer)
             set_audio_control(audio_data, True)
             st.session_state.audio.append(audio_data)
@@ -134,9 +134,9 @@ def teacher_page():
     else:
         wav_audio_data = st_audiorec()
         if wav_audio_data is not None:
-            save_audio_as_wav(wav_audio_data, "tmp.wav")
             with answer_dom.container():
                 with st.spinner('AI 聆听中...'):
+                    save_audio_as_wav(wav_audio_data, "tmp.wav")
                     user_input = speech_to_text("tmp.wav")
                 process(user_input)
 
