@@ -66,6 +66,7 @@ EMOJI = {
     "law": "⚖️",
     "youtube": "",
     "warning": "⚠️",
+    "teacher": "👩🏻‍🏫",
     "microphone": ":studio_microphone:",
     "keyboard": ":keyboard:"
 }

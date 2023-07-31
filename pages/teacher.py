@@ -9,7 +9,6 @@ from speech_synthesis import (
 from config.global_config import (
     MAX_CONTEXT,
     ERROR_RESPONSE,
-    DISCLAIMER,
     EMOJI
 )
 from utils import (
@@ -17,7 +16,7 @@ from utils import (
 )
 from st_custom_components import st_audiorec
 
-st.title(f"Regulus English Teacher")
+st.title(f"Regulus English Teacher {EMOJI['teacher']}")
 
 
 def teacher_page():
@@ -62,11 +61,12 @@ def teacher_page():
                 for index, item in enumerate(history):
                     even_index = index % 2
                     if even_index == 0:
-                        message(item.content, is_user=True, key=f"{index}_user", avatar_style="personas")
+                        message(item.content, is_user=True, key=f"{index}_user", avatar_style="personas", seed="Lily")
                         message(
                             history[index + 1].content,
                             key=f"{index + 1}",
                             avatar_style='micah',
+                            seed="Cali",
                             allow_html=True
                         )
                         if len(st.session_state.audio) > 0: set_audio_control(
@@ -97,11 +97,11 @@ def teacher_page():
 
     def process(user_input):
         with question_dom.container():
-            message(user_input, is_user=True, avatar_style="personas")
+            message(user_input, is_user=True, avatar_style="personas", seed="Lily")
         answer = predict(user_input)
         print(f"回答：{answer}", flush=True)
         with answer_dom.container():
-            message(answer, avatar_style='micah')
+            message(answer, avatar_style='micah', seed="Cali")
             with st.spinner("AI 语音合成中..."):
                 audio_data = text_to_speech(answer)
             set_audio_control(audio_data, True)
@@ -135,9 +135,10 @@ def teacher_page():
         wav_audio_data = st_audiorec()
         if wav_audio_data is not None:
             save_audio_as_wav(wav_audio_data, "tmp.wav")
-            with st.spinner('AI 聆听中...'):
-                user_input = speech_to_text("tmp.wav")
-            process(user_input)
+            with answer_dom.container():
+                with st.spinner('AI 聆听中...'):
+                    user_input = speech_to_text("tmp.wav")
+                process(user_input)
 
 
 teacher_page()
