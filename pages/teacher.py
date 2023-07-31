@@ -17,10 +17,11 @@ from utils import (
 )
 from st_custom_components import st_audiorec
 
+st.title(f"Regulus English Teacher")
+
 
 def teacher_page():
     print("run teacher page...")
-    st.title(f"Regulus English Teacher")
     history_dom = st.empty()
     question_dom = st.empty()
     answer_dom = st.empty()
@@ -137,3 +138,6 @@ def teacher_page():
             with st.spinner('AI 聆听中...'):
                 user_input = speech_to_text("tmp.wav")
             process(user_input)
+
+
+teacher_page()

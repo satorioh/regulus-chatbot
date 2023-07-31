@@ -10,6 +10,8 @@ from config.global_config import (
     SUPPORTED_TRANSLATE_LANGUAGES
 )
 
+st.title(f"Regulus Translator {EMOJI['translation']}")
+
 
 def get_translator():
     print("get translator")
@@ -39,7 +41,6 @@ def translation(input, options):
 
 def translation_page():
     print("run translation page...")
-    st.title(f"Regulus Translator {EMOJI['translation']}")
     hint_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
     st.write("")
@@ -86,3 +87,6 @@ def translation_page():
 
         if btn_clear:
             pass
+
+
+translation_page()

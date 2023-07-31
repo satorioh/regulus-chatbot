@@ -8,10 +8,11 @@ from config.global_config import (
 )
 from embeddings import get_embeddings
 
+st.title(f"Regulus Law Helper {EMOJI['law']}")
+
 
 def laws_page():
     print("run laws page...")
-    st.title(f"Regulus Law Helper {EMOJI['law']}")
     history_dom = st.empty()
     question_dom = st.markdown(DISCLAIMER)
     answer_dom = st.empty()
@@ -89,3 +90,6 @@ def laws_page():
         if btn_clear:
             # history_dom.empty()
             clear_history()
+
+
+laws_page()

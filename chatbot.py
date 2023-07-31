@@ -10,6 +10,16 @@ from config.global_config import (
     DISCLAIMER
 )
 
+st.set_page_config(
+    page_title="Regulus Chatbot",
+    page_icon=":robot:",
+    menu_items={"about": '''
+                Author: Robin.Wang
+
+                Model: ChatGPT-3.5-tubo
+                '''}
+)
+
 
 def chatbot_page():
     print("run chatbot page...")
@@ -99,3 +109,6 @@ def chatbot_page():
         if btn_clear:
             history_dom.empty()
             clear_history()
+
+
+chatbot_page()

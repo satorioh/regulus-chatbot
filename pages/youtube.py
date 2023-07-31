@@ -10,10 +10,11 @@ from langchain.document_loaders import YoutubeLoader
 from youtube_transcript_api import YouTubeTranscriptApi
 from llm import get_youtube_summary
 
+st.title(f"Regulus Youtube Summary")
+
 
 def youtube_page():
     print("run youtube page...")
-    st.title(f"Regulus Youtube Summary")
     hint_dom = st.markdown(DISCLAIMER)
     st.write("")
 
@@ -82,3 +83,6 @@ def youtube_page():
                 except Exception as e:
                     print(f"生成总结失败:{e}")
                     hint_dom.markdown("**生成总结失败**")
+
+
+youtube_page()
