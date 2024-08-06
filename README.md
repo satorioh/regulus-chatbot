@@ -12,6 +12,9 @@ This project aims to demonstrate typical application scenarios of large models o
 - Developed a legal assistant by integrating zilliz vector library and RetriveQA.
 - Created a video summarization feature using youtube-transcript-api and load_summarize_chain.
 
+![](./asserts/images/1.jpg)
+![](./asserts/images/2.jpg)
+
 ## Installation and Running
 1. Clone the project to your local machine:
     ```bash
